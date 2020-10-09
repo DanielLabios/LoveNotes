@@ -1,0 +1,8 @@
+/*insert seed sql here*/
+TRUNCATE TABLE "Notes";
+INSERT INTO "Notes" ("Author", "Body", "Opened") VALUES ('Timmy Kins', 'Wonderful Speech! I felt very strongly about your performance! Be careful about closing your eyes when your speaking. It creates a disconnect with the audience.','FALSE');
+INSERT INTO "Notes" ("Author", "Body", "Opened") VALUES ('Johnny Hash', 'You have been improving on your public skills since you fist joined 7 months ago. Job well done! Do not slow down! Do not be scared about pausing when speaking. Use it instead for dramatic effect.','FALSE');
+INSERT INTO "Notes" ("Author", "Body", "Opened") VALUES ('Candy Miens', 'I am inspired by how well you have been improving. I really love your gestures and your ability to describe the story through your body movement. Be cognizant about closing your eyes for too long.','FALSE');
+INSERT INTO "Notes" ("Author", "Body", "Opened") VALUES ('Stephen', 'Try to speak up a bit more for us in the back. I can hear you projecting your voice, but make it a little louder so the effect can be felt back here too.','FALSE');
+INSERT INTO "Notes" ("Author", "Body", "Opened") VALUES ('Anonymous', 'Thanks for having me! I think you did an awesome job! :o','FALSE');
+INSERT INTO "Notes" ("Author", "Body", "Opened") VALUES ('Tiffany from Stirling TM', 'Carol, no wonder your prez is boasting about you! Well done speech. Vivid storytelling! Started strong and ended fairly well! I would suggest you work on Cadence. Come see me when you get the chance.','FALSE');
