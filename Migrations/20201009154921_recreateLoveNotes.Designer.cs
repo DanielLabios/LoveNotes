@@ -9,8 +9,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace LoveNotes.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20201008193718_CreateNote")]
-    partial class CreateNote
+    [Migration("20201009154921_recreateLoveNotes")]
+    partial class recreateLoveNotes
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -22,7 +22,7 @@ namespace LoveNotes.Migrations
 
             modelBuilder.Entity("LoveNotes.Models.Note", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
@@ -36,7 +36,7 @@ namespace LoveNotes.Migrations
                     b.Property<bool>("Opened")
                         .HasColumnType("boolean");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.ToTable("Notes");
                 });

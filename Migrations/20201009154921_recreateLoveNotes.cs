@@ -3,7 +3,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace LoveNotes.Migrations
 {
-    public partial class CreateNote : Migration
+    public partial class recreateLoveNotes : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,7 +11,7 @@ namespace LoveNotes.Migrations
                 name: "Notes",
                 columns: table => new
                 {
-                    ID = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Author = table.Column<string>(nullable: true),
                     Body = table.Column<string>(nullable: true),
@@ -19,7 +19,7 @@ namespace LoveNotes.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Notes", x => x.ID);
+                    table.PrimaryKey("PK_Notes", x => x.Id);
                 });
         }
 

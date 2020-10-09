@@ -20,7 +20,7 @@ namespace LoveNotes.Migrations
 
             modelBuilder.Entity("LoveNotes.Models.Note", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
@@ -34,7 +34,7 @@ namespace LoveNotes.Migrations
                     b.Property<bool>("Opened")
                         .HasColumnType("boolean");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.ToTable("Notes");
                 });
