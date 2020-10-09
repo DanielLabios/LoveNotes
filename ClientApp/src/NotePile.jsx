@@ -1,47 +1,27 @@
 import React, { useState } from 'react'
 function NoteListGenerator() {
+  const [openClosed, setOpenClosed] = useState(['block', 'none', 'none'])
   return (
     <>
       <li>
-        <a>(mail svg here!)</a>
+        <a style={{ display: 'none' }}>(mail svg here!)</a>
         <div>
-          <h2>From (Mail Author)</h2>
+          <div style={{ width: '30rem' }}>
+            <a>(mail svg here!)</a>
+            <h2>From (Mail Author)</h2>
+          </div>
           <p>(500 message here)</p>
         </div>
       </li>
+
       <li>
-        <a>(mail svg here!)</a>
+        <a style={{ display: 'block' }}>(mail svg here!)</a>
         <div>
-          <h2>From (Mail Author)</h2>
-          <p>(500 message here)</p>
-        </div>
-      </li>
-      <li>
-        <a>(mail svg here!)</a>
-        <div>
-          <h2>From (Mail Author)</h2>
-          <p>(500 message here)</p>
-        </div>
-      </li>
-      <li>
-        <a>(mail svg here!)</a>
-        <div>
-          <h2>From (Mail Author)</h2>
-          <p>(500 message here)</p>
-        </div>
-      </li>
-      <li>
-        <a>(mail svg here!)</a>
-        <div>
-          <h2>From (Mail Author)</h2>
-          <p>(500 message here)</p>
-        </div>
-      </li>
-      <li>
-        <a>(mail svg here!)</a>
-        <div>
-          <h2>From (Mail Author)</h2>
-          <p>(500 message here)</p>
+          <div>
+            <a style={{ display: 'none' }}>(mail svg here!)</a>
+            <h2>From (Mail Author)</h2>
+          </div>
+          <p style={{ display: 'none' }}>(500 message here)</p>
         </div>
       </li>
     </>
@@ -60,7 +40,7 @@ export function NotePile() {
   return (
     <>
       <section className="NotePile">
-        <div>
+        <main>
           <article>
             <h1>Your Note Pile</h1>
             <a onClick={() => openedClosedNotePile()}>arrow svg here</a>
@@ -69,12 +49,12 @@ export function NotePile() {
             <b>(6) unread notes for (all speeches)</b>
             <browse>(browse by component here)</browse>
           </article>
-        </div>
-        <div>
-          <ul style={{ display: `${openClosed}` }}>
+        </main>
+        <main>
+          <ul className="Note" style={{ display: `${openClosed}` }}>
             <NoteListGenerator />
           </ul>
-        </div>
+        </main>
       </section>
     </>
   )

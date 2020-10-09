@@ -1,3 +1,7 @@
+$trueblue: #004165;
+$white: #f6f6f6;
+$truewhite: #fdfdfd;
+$accentyellow: #f2df74;
 :root {
   font: 16px / 1 sans-serif;
 }
@@ -9,69 +13,104 @@ html {
 body {
   margin: 0;
   min-height: 100%;
-  background-color: #004165;
+  background-color: $trueblue;
 }
 
 .UserProfile {
-  background-color: #f6f6f6;
+  background-color: $white;
   display: flex;
   justify-content: space-between;
-}
-.UserProfile article h2 {
-  margin: 0rem;
-}
 
-.UserProfile article h3 {
-  margin: 0rem;
-}
-.UserProfile div:last-child {
-  display: flex;
-}
-.UserProfile button {
-  display: inherit;
-  flex-direction: column;
+  article {
+    h2 {
+      margin: 0rem;
+    }
+
+    h3 {
+      margin: 0rem;
+    }
+  }
+
+  div:last-child {
+    display: flex;
+  }
+
+  button {
+    display: inherit;
+    flex-direction: column;
+  }
 }
 
 .NotePile {
   position: absolute;
   bottom: 0;
   left: 0;
-  background-color: #f6f6f6;
+  background-color: $white;
+
+  main:first-child {
+    width: 100vw;
+    height: 8rem;
+    border-top: 6px solid $accentyellow;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0px 15px 25px 0px #d4d4d4;
+  }
+
+  article:first-child {
+    margin-top: 1rem;
+    margin-left: 2rem;
+    display: inherit;
+  }
+
+  h1 {
+    margin: 0rem;
+  }
+  article:last-child {
+    display: inherit;
+    justify-content: space-around;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    margin-bottom: 1rem;
+  }
+  b {
+    margin: 0rem;
+    width: 45vw;
+  }
+  ul {
+    margin: 0rem;
+
+    height: 50vh;
+    overflow-y: scroll;
+  }
 }
 
-.NotePile div:first-child {
-  width: 100vw;
-  height: 8rem;
-  border-top: 6px solid #f2df74;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  box-shadow: 0px 15px 25px 0px #d4d4d4;
-}
+.Note {
+  li {
+    list-style: none;
+    display: flex;
+    margin-top: 2rem;
+  }
+  div > div {
+    height: 2rem;
+    display: flex;
+    border: 1px solid black;
+    border-radius: 0.5rem;
+    background-color: $truewhite;
+  }
 
-.NotePile article:first-child {
-  margin-top: 1rem;
-  margin-left: 2rem;
-  display: inherit;
-}
+  h2 {
+    margin: 0rem;
+  }
 
-.NotePile h1 {
-  margin: 0rem;
-}
-.NotePile article:last-child {
-  display: inherit;
-  justify-content: space-around;
-  margin-left: 2rem;
-  margin-right: 2rem;
-  margin-bottom: 1rem;
-}
-.NotePile b {
-  margin: 0rem;
-  width: 45vw;
-}
-.NotePile ul {
-  margin: 0rem;
+  p {
+    margin: 0rem;
+    margin-top: 1rem;
+    background-color: $truewhite;
 
-  height: 50vh;
-  overflow-y: scroll;
+    border: 1px solid black;
+    border-radius: 0.5rem;
+    width: 30rem;
+    height: 20rem;
+  }
 }
