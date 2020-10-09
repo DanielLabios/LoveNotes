@@ -1,23 +1,29 @@
 import React, { useState } from 'react'
 function NoteListGenerator() {
-  const [openClosed, setOpenClosed] = useState(['block', 'none', 'none'])
+  const [openClosed, setOpenClosed] = useState([
+    'block',
+    'none',
+    '30rem',
+    '25rem',
+  ])
+  function openedClosedNote() {}
   return (
     <>
       <li>
         <a style={{ display: 'none' }}>(mail svg here!)</a>
         <div>
           <div style={{ width: '30rem' }}>
-            <a>(mail svg here!)</a>
+            <a style={{ display: 'block' }}>(mail svg here!)</a>
             <h2>From (Mail Author)</h2>
           </div>
-          <p>(500 message here)</p>
+          <p style={{ display: 'block' }}>(500 message here)</p>
         </div>
       </li>
 
       <li>
         <a style={{ display: 'block' }}>(mail svg here!)</a>
         <div>
-          <div>
+          <div style={{ width: '25rem' }}>
             <a style={{ display: 'none' }}>(mail svg here!)</a>
             <h2>From (Mail Author)</h2>
           </div>
