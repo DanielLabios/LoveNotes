@@ -12,8 +12,64 @@ html {
 
 body {
   margin: 0;
-  min-height: 100%;
   background-color: $trueblue;
+}
+
+.HomePage {
+  height: 100vh;
+
+  overflow-x: hidden;
+
+  header {
+    display: flex;
+    flex-direction: column;
+    margin-top: 5vh;
+    margin-left: -3rem;
+    padding-right: 6rem;
+    width: 110vw; //make math here 100vh + 6rem
+
+    background-color: $white;
+    transform: rotate(9deg);
+    align-items: flex-end;
+    h1 {
+      margin: 0rem;
+      margin-right: 3rem;
+      margin-top: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    h4 {
+      margin: 0rem;
+      margin-right: 3.5rem;
+      margin-bottom: 0.5rem;
+    }
+  }
+  body {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+  }
+
+  body section:first-child {
+    margin-bottom: 20vh;
+    color: $truewhite;
+
+    display: block;
+    div {
+      width: 15rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    input {
+      display: inherit;
+      width: 15rem;
+    }
+  }
+  body section:last-child > div {
+    background-color: $truewhite;
+    width: 100vw;
+  }
 }
 
 .UserProfile {
