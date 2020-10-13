@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useLayoutEffect } from 'react'
 import Axios from 'axios'
 function NoteListGenerator(props) {
   return (
@@ -102,11 +102,15 @@ export function NotePile() {
       const response = await fetch(url)
       const json = await response.json()
       setNotes(json)
-      console.log(json.length)
+      //console.log(json.length)
       setOpenClosedNote(createOpenClosedNoteStates(json))
     }
     loadNotes()
   }, [])
+
+  // useLayoutEffect(() => {
+  //   document.getElementById(whichNote).scrollIntoView()
+  // }, [whichNote])
 
   function openedClosedNote(whichNote) {
     let allStates = []
@@ -128,7 +132,7 @@ export function NotePile() {
         allStates.push(openState)
       } else allStates.push(closedState)
       setOpenClosedNote(allStates)
-      document.getElementById(whichNote).scrollIntoView()
+      // document.getElementById(whichNote).scrollIntoView()
     }
   }
 

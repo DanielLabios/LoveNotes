@@ -15,6 +15,7 @@ namespace LoveNotes.Models
 
         // Add database tables here
         public DbSet<Note> Notes { get; set; }
+        public DbSet<Speech> Speeches { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

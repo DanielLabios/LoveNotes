@@ -170,3 +170,33 @@ body {
     height: 20rem;
   }
 }
+
+.GiveNote {
+  background-color: $truewhite;
+  // display: flex;
+  // flex-direction: column;
+  width: 100vw;
+  > div {
+    width: 25rem;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid red;
+  }
+
+  h1 {
+    color: $trueblue;
+    text-align: end;
+  }
+  input:not(:last-child) {
+    display: block;
+    width: 25rem;
+    margin-top: 1rem;
+  }
+  input:first-child {
+    height: 2rem;
+  }
+  textarea {
+    width: 25rem;
+    height: 10rem;
+  }
+}
