@@ -1,6 +1,41 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { recordAuthentication } from '../auth'
 export function HomePage() {
+  const [errorMessage, setErrorMessage] = useState()
+
+  const [user, setUser] = useState({
+    userName: 'Username',
+    password: 'Password',
+  })
+
+  function handleStringFieldChange(event) {
+    const value = event.target.value
+    const fieldName = event.target.name
+
+    const updatedUser = { ...user, [fieldName]: value }
+
+    setUser(updatedUser)
+  }
+
+  async function handleFormSubmit(event) {
+    event.preventDefault()
+
+    const response = await fetch('api/Sessions', {
+      method: 'Post',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(user),
+    })
+    const apiResponse = await response.json()
+
+    if (apiResponse.status === 400) {
+      setErrorMessage(Object.values(apiResponse.errors).join(' '))
+    } else {
+      recordAuthentication(apiResponse)
+      window.location.assign('/user/id') //redirect to user page please
+    }
+  }
+
   return (
     <>
       <main className="HomePage">
@@ -28,14 +63,28 @@ export function HomePage() {
               <article>
                 <div>
                   <h1>Sign In Or</h1>
-                  <h1>Create An Account</h1>
+                  <Link to="/signup">
+                    <h1>Create An Account</h1>
+                  </Link>
                 </div>
                 <div>
-                  <input type="text" value="Username"></input>
-                  <input type="text" value="password"></input>
-                  <Link to="/user/id">
+                  <form onSubmit={handleFormSubmit}>
+                    {errorMessage && <p>{errorMessage}</p>}
+                    <input
+                      onChange={handleStringFieldChange}
+                      name="userName"
+                      type="text"
+                      value={user.userName}
+                    ></input>
+                    <input
+                      onChange={handleStringFieldChange}
+                      name="password"
+                      type="text"
+                      value={user.password}
+                    ></input>
+
                     <input type="submit" value="Log In"></input>
-                  </Link>
+                  </form>
                 </div>
 
                 <h4>I forgot my login</h4>

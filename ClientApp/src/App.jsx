@@ -4,6 +4,7 @@ import { HomePage } from './pages/HomePage'
 import { LoggedInUser } from './pages/LoggedInUser'
 import { AudienceGiveNote } from './pages/AudienceGiveNote'
 import { Switch, Route } from 'react-router-dom'
+import { Signup } from './pages/Signup'
 
 export function App() {
   return (
@@ -17,6 +18,9 @@ export function App() {
         </Route>
         <Route exact path="/user/speech/speechid">
           <AudienceGiveNote />
+        </Route>
+        <Route exact path="/signup">
+          <Signup />
         </Route>
       </Switch>
     </>
