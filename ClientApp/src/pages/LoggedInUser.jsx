@@ -34,7 +34,11 @@ export function LoggedInUser() {
       <main className="loggedInUser">
         <body>
           <UserProfile speeches={speeches} />
-          <SpeechSchedule speeches={speeches} user={user} />
+          <SpeechSchedule
+            speeches={speeches}
+            user={user}
+            loadSpeeches={loadSpeeches}
+          />
           <NotePile
             speeches={speeches}
             user={user}

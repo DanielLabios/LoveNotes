@@ -1,7 +1,8 @@
 $trueblue: #004165;
 $darkblue: #07394f;
 $white: #fdfdfd;
-$grey: #ededed;
+$tmwhite: #ededed;
+$grey: #a9b2b1;
 $accentyellow: #f2df74;
 $tmred: #772432;
 $black: #0c0c0c;
@@ -79,9 +80,10 @@ body {
 }
 
 .loggedInUser {
+  height: 100vh;
   background-image: url('images/loggedinuserbackground2.jpg');
   background-size: cover;
-  background-position-x: -10vw;
+  background-position-x: -30vw;
   background-repeat: no-repeat;
   //overflow-x: hidden;
 }
@@ -164,11 +166,12 @@ body {
   background-size: 300vw;
   background-position-x: center;
   background-repeat: no-repeat;
-  display: flex;
+  display: none;
+  //display: flex;
   flex-direction: column;
   align-items: center;
 
-  h1 {
+  h1:not(:last-child) {
     font-size: 1.25rem;
     width: 90vw;
     color: $white;
@@ -298,52 +301,62 @@ body {
 }
 
 .NotePile {
-  display: none;
+  //display: none;
+  main:first-child {
+    margin-left: auto;
+    margin-right: auto;
+    width: 90vw;
+    background-color: $white;
+    border-radius: 0.25rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    display: flex;
+    justify-content: space-around;
+    box-shadow: -5px 5px 5px 0px #29292975;
+
+    h1 {
+      margin: 0rem;
+    }
+    ul {
+      padding: 0rem;
+      margin: 0rem;
+    }
+  }
+  main:last-child {
+    ul {
+      padding: 0rem;
+      margin: 0rem;
+
+      > div {
+        display: flex;
+
+        > div {
+          border-radius: 1rem;
+          background-color: $white;
+          margin-left: 5vw;
+          max-width: 90vw;
+          min-width: 40vw;
+          margin-top: 1rem;
+          box-shadow: -5px 5px 5px 0px #29292975;
+
+          li {
+            list-style: none;
+            padding: 1rem;
+          }
+
+          svg {
+            width: 2.5rem;
+          }
+        }
+      }
+      > svg {
+        margin-top: 0.5rem;
+        height: 1rem;
+        margin-left: 7vw;
+      }
+    }
+  }
 }
-
-// .NotePile {
-//   position: absolute;
-//   bottom: 0;
-//   left: 0;
-//   background-color: $white;
-
-//   main:first-child {
-//     width: 100vw;
-//     height: 8rem;
-//     border-top: 6px solid $accentyellow;
-//     display: flex;
-//     flex-direction: column;
-//     justify-content: space-between;
-//     box-shadow: 0px 15px 25px 0px #d4d4d4;
-//   }
-
-//   article:first-child {
-//     margin-top: 1rem;
-//     margin-left: 2rem;
-//     display: inherit;
-//   }
-
-//   h1 {
-//     margin: 0rem;
-//   }
-//   article:last-child {
-//     display: inherit;
-//     justify-content: space-around;
-//     margin-left: 2rem;
-//     margin-right: 2rem;
-//     margin-bottom: 1rem;
-//   }
-//   b {
-//     margin: 0rem;
-//     width: 45vw;
-//   }
-//   ul:first-child {
-//     margin: 0rem;
-
-//     height: 50vh;
-//     overflow-y: scroll;
-//   }
-// }
 
 // .Note {
 //   li {

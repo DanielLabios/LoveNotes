@@ -3,6 +3,7 @@ import Axios from 'axios'
 
 export function NotePile(props) {
   const [expandedNoteId, setExpanededNoteId] = useState(0)
+  const [speechIdFilter, setSpeechIdFilter] = useState(0)
 
   // useLayoutEffect(() => {
   //   document.getElementById(whichNote).scrollIntoView()
@@ -35,7 +36,6 @@ export function NotePile(props) {
             <h1>NotePile</h1>
           </article>
           <article>
-            <b>{unreadNotes} unread notes for (all speeches)</b>
             <ul>
               <b>Filter Notes By Speech</b>
               <select
@@ -59,25 +59,57 @@ export function NotePile(props) {
               <ul className="Note">
                 {speech.notes.map((note) => {
                   return (
-                    <li
-                      onClick={function () {
-                        if (expandedNoteId === note.id) {
-                          setExpanededNoteId(0)
-                        } else {
-                          setExpanededNoteId(note.id)
-                        }
-                      }}
-                    >
-                      {note.author}
-                      <div
-                        style={{
-                          display:
-                            note.id === expandedNoteId ? 'block' : 'none',
-                        }}
-                      >
-                        {note.body}
+                    <>
+                      <div>
+                        <div>
+                          <li
+                            onClick={function () {
+                              if (expandedNoteId === note.id) {
+                                setExpanededNoteId(0)
+                              } else {
+                                setExpanededNoteId(note.id)
+                              }
+                            }}
+                          >
+                            From {note.author} . . .
+                            <div
+                              style={{
+                                display:
+                                  note.id === expandedNoteId ? 'block' : 'none',
+                                width:
+                                  note.id === expandedNoteId ? 'auto' : '0rem',
+                              }}
+                            >
+                              <p>{note.body}</p>
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 77.31 14.12"
+                              >
+                                <g id="Layer_2" data-name="Layer 2">
+                                  <g id="Layer_1-2" data-name="Layer 1">
+                                    <rect width="77.31" height="14.12" />
+                                  </g>
+                                </g>
+                              </svg>
+                              <button>Del</button>
+                            </div>
+                          </li>
+                        </div>
                       </div>
-                    </li>
+                      <svg
+                        style={{
+                          fill: note.opened === false ? '#772432' : '#a9b2b1',
+                        }}
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 41.38 24.15"
+                      >
+                        <g id="Layer_2" data-name="Layer 2">
+                          <g id="Layer_1-2" data-name="Layer 1">
+                            <path d="M.72,2.9l31.88,21A1.59,1.59,0,0,0,35,23L41.31,2a1.59,1.59,0,0,0-1.52-2H1.59A1.58,1.58,0,0,0,.72,2.9Z" />
+                          </g>
+                        </g>
+                      </svg>
+                    </>
                   )
                 })}
               </ul>
