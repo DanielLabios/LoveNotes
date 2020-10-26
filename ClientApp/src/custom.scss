@@ -24,7 +24,7 @@ body {
 
 .HomePage {
   height: 100vh;
-
+  background-color: $trueblue;
   overflow-x: hidden;
 
   header {
@@ -166,8 +166,8 @@ body {
   background-size: 300vw;
   background-position-x: center;
   background-repeat: no-repeat;
-  display: none;
-  //display: flex;
+  //display: none;
+  display: flex;
   flex-direction: column;
   align-items: center;
 
@@ -253,6 +253,8 @@ body {
   }
 
   .speechButtons {
+    transition: (all 1s ease-out 0.5s);
+    border: solid 10px red;
     margin-top: -1.5rem;
     padding-bottom: 0rem;
     background-color: $white;
@@ -301,7 +303,7 @@ body {
 }
 
 .NotePile {
-  //display: none;
+  display: none;
   main:first-child {
     margin-left: auto;
     margin-right: auto;
@@ -332,6 +334,7 @@ body {
 
         > div {
           border-radius: 1rem;
+
           background-color: $white;
           margin-left: 5vw;
           max-width: 90vw;

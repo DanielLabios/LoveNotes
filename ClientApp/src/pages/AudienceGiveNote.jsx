@@ -1,14 +1,38 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useLayoutEffect } from 'react'
+import { useParams } from 'react-router-dom'
 //import { GiveNote } from './GiveNote'
 //import { Link } from 'react-router-dom'
 
 export function AudienceGiveNote() {
+  const params = useParams()
+  const speechKey = String(params.speechKey)
+  const [pageDetails, setPageDetails] = useState({})
   const [newNote, setNewNote] = useState({ Author: null, Body: null })
   const [charCount, setCharCount] = useState(150)
 
+  useEffect(() => {
+    loadPageDetails()
+  }, [])
+
+  async function loadPageDetails() {
+    const response = await fetch(`/api/Speeches/${speechKey}`)
+    const json = await response.json()
+    if (json.status === 400) {
+      window.location.assign('/')
+    } else {
+      setPageDetails(json)
+      console.log(json)
+    }
+  }
+
   async function handleFormSubmit(event) {
     event.preventDefault()
-    console.log('I submitted')
+    const response = await fetch('/api/Notes', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+
+      body: JSON.stringify({ ...newNote, speechId: 10 }),
+    })
   }
 
   function handleAuthorStringFieldChange(event) {
@@ -33,9 +57,21 @@ export function AudienceGiveNote() {
     <>
       <main>
         <body>
+          <section>
+            <h3>Speech Title</h3>
+            <h1>{pageDetails.title}</h1>
+            <h3>Speaker Name</h3>
+            <h1>{pageDetails.speechPerformerName}</h1>
+          </section>
           <section className="GiveNote">
             <div>
-              <h1>Give Notes To (Name Of Person)</h1>
+              <h1
+                onClick={() => {
+                  console.log('speechKey')
+                }}
+              >
+                Give Notes To {pageDetails.speechPerformerName}
+              </h1>
               <form onSubmit={handleFormSubmit}>
                 <input
                   type="text"

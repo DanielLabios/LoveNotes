@@ -71,11 +71,15 @@ export function SpeechSchedule(props) {
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({ ...editSpeech, notes: [] }),
     })
-    //resetEditSpeech() get response back to implement this
+    //resetEditSpeech() put in use effect
     setEditSpeechBox(0)
     setOpenSpeechBoxOptions(0)
     props.loadSpeeches()
   }
+
+  // useEffect(() => {
+  //   loadSpeeches()
+  // }, [])
 
   async function handleSpeechDelete() {
     const response = await fetch(`/api/Speeches/${confirmDelete}`, {

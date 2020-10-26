@@ -16,7 +16,7 @@ export function App() {
         <Route exact path="/user/id">
           <LoggedInUser />
         </Route>
-        <Route exact path="/user/speech/speechid">
+        <Route exact path="/Notes/:speechKey">
           <AudienceGiveNote />
         </Route>
         <Route exact path="/signup">

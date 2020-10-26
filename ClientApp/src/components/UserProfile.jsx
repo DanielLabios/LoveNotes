@@ -2,14 +2,10 @@ import React, { useState, useEffect, useLayoutEffect } from 'react'
 import { logout, authHeader, getUser } from '../auth'
 import moment from 'moment'
 
-function handleLogout() {
-  logout()
-  window.location.assign('/')
-}
-
 export function UserProfile(props) {
   const user = getUser()
   const [upcomingSpeech, setUpcomingSpeech] = useState({})
+  const [expandOptions, setExpandOptions] = useState(false)
 
   useEffect(() => {
     loadSpeech()
@@ -48,6 +44,11 @@ export function UserProfile(props) {
             <h1>LoveNotes</h1>
           </div>
           <svg
+            onClick={() => {
+              expandOptions === true
+                ? setExpandOptions(false)
+                : setExpandOptions(true)
+            }}
             className="menuIcon"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 12.96 56.51"
@@ -60,6 +61,24 @@ export function UserProfile(props) {
               </g>
             </g>
           </svg>
+        </article>
+
+        <article
+          className="Options"
+          style={{
+            display: expandOptions === true ? 'block' : 'none',
+          }}
+        >
+          <button>Change Profile</button>
+          <button>Give Note</button>
+          <button
+            onClick={() => {
+              logout()
+              window.location.assign('/')
+            }}
+          >
+            Log Out
+          </button>
         </article>
 
         <article>
