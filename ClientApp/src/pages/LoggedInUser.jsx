@@ -9,6 +9,7 @@ import { SpeechSchedule } from '../components/SpeechSchedule'
 export function LoggedInUser() {
   const user = getUser()
   const [speeches, setSpeeches] = useState([])
+  const [switchComponent, setSwitchComponent] = useState(0)
 
   useEffect(() => {
     loadSpeeches()
@@ -35,11 +36,15 @@ export function LoggedInUser() {
         <body>
           <UserProfile speeches={speeches} />
           <SpeechSchedule
+            componentToggleState={switchComponent}
+            componentToggle={setSwitchComponent}
             speeches={speeches}
             user={user}
             loadSpeeches={loadSpeeches}
           />
           <NotePile
+            componentToggleState={switchComponent}
+            componentToggle={setSwitchComponent}
             speeches={speeches}
             user={user}
             loadSpeeches={loadSpeeches}

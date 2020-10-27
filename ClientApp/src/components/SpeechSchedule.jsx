@@ -9,6 +9,7 @@ export function SpeechSchedule(props) {
   const [openSpeechBoxOptions, setOpenSpeechBoxOptions] = useState(0)
   const [editSpeechBox, setEditSpeechBox] = useState(0)
   const [confirmDelete, setConfirmDelete] = useState(0)
+  const [resetStates, setResetStates] = useState(0)
   const [editSpeech, setEditSpeech] = useState({
     id: null,
     title: '',
@@ -16,6 +17,25 @@ export function SpeechSchedule(props) {
     timeSlot: null,
     userId: props.user.id,
   })
+  const defaultDate = new Date()
+  const speechTimeCutOff = moment(
+    defaultDate.setHours(defaultDate.getHours() + 2)
+  ).format('YYYY-MM-DDThh:mm:ss')
+
+  useEffect(() => {
+    setOpenSpeechBoxOptions(0)
+    setEditSpeechBox(0)
+    setConfirmDelete(0)
+    setOpenNewSpeechBox(false)
+    setEditSpeech({
+      id: null,
+      title: '',
+      speechKey: '',
+      timeSlot: null,
+      userId: props.user.id,
+    })
+    props.loadSpeeches()
+  }, [resetStates])
 
   function handleStringFieldChange(event) {
     const value = event.target.value
@@ -63,17 +83,15 @@ export function SpeechSchedule(props) {
     }
   }
 
-  async function handleSpeechEdit(event) {
+  async function handleSpeechEdit(event, id) {
     event.preventDefault()
 
-    const response = await fetch(`/api/Speeches/${props.user.id}`, {
+    const response = await fetch(`/api/Speeches/${id}`, {
       method: 'PUT',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({ ...editSpeech, notes: [] }),
     })
-    //resetEditSpeech() put in use effect
-    setEditSpeechBox(0)
-    setOpenSpeechBoxOptions(0)
+
     props.loadSpeeches()
   }
 
@@ -87,202 +105,251 @@ export function SpeechSchedule(props) {
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(confirmDelete),
     })
-    setConfirmDelete(0)
-    setOpenSpeechBoxOptions(0)
-    props.loadSpeeches()
+    //setConfirmDelete(0)
+    //setOpenSpeechBoxOptions(0)
+    //props.loadSpeeches()
   }
 
   return (
     <>
       <section className="speechSchedule">
-        <h1>Scheduled Speeches</h1>
+        <div
+          style={{
+            display: props.componentToggleState === 1 ? 'block' : 'none',
+          }}
+          onClick={function () {
+            props.componentToggle(0)
+          }}
+        >
+          Speeches
+        </div>
+        <section
+          style={{
+            display: props.componentToggleState === 0 ? 'block' : 'none',
+          }}
+        >
+          <h1>Scheduled Speeches</h1>
 
-        <div>
-          {props.speeches.map((speech) => (
-            <>
-              <article>
-                <body>
-                  <div>
-                    {editSpeechBox != speech.id ? (
-                      <>
-                        <h4>{moment(speech.timeSlot).format('MMM Do')}</h4>
-                        <h4>{moment(speech.timeSlot).format('h:mm')}pm</h4>
-                      </>
-                    ) : (
-                      <Flatpickr
-                        options={{
-                          //static: true,
-                          disableMobile: true,
-                          enableTime: true,
-                          dateFormat: 'Y-m-d H:i',
-                        }}
-                        value={editSpeech.timeSlot}
-                        onChange={(time) => {
-                          const updatedTime = {
-                            ...editSpeech,
-                            timeSlot: time[0],
-                          }
-                          setEditSpeech(updatedTime)
-                        }}
-                      />
-                    )}
-                  </div>
-                  <div>
-                    <h2>
-                      Title:{'  '}
-                      {editSpeechBox != speech.id ? (
-                        <span>{speech.title}</span>
-                      ) : (
-                        <input
-                          type="text"
-                          name="title"
-                          value={editSpeech.title}
-                          onChange={handleStringFieldChange}
-                        ></input>
-                      )}
-                    </h2>
-
-                    <h2>
-                      Speech Key:{'  '}
-                      {editSpeechBox != speech.id ? (
-                        <span>{speech.speechKey}</span>
-                      ) : (
-                        <input
-                          type="text"
-                          name="speechKey"
-                          value={editSpeech.speechKey}
-                          onChange={handleStringFieldChange}
-                        ></input>
-                      )}
-                    </h2>
-                  </div>
-                </body>
-                <body>
-                  <svg
+          <div>
+            {props.speeches
+              .filter((speech) => speech.timeSlot > speechTimeCutOff)
+              .map((speech) => (
+                <>
+                  <article
                     onClick={function () {
-                      if (openSpeechBoxOptions === speech.id) {
-                        setOpenSpeechBoxOptions(0)
-                      } else {
-                        setOpenSpeechBoxOptions(speech.id)
-                      }
+                      setOpenSpeechBoxOptions(speech.id)
+                      setOpenNewSpeechBox(false)
                     }}
-                    className="menuIcon"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 12.96 56.51"
                   >
-                    <g id="Layer_2" data-name="Layer 2">
-                      <g id="Layer_1-2" data-name="Layer 1">
-                        <circle cx="6.48" cy="28.25" r="6.48" />
-                        <circle cx="6.48" cy="50.03" r="6.48" />
-                        <circle cx="6.48" cy="6.48" r="6.48" />
-                      </g>
-                    </g>
-                  </svg>
-                </body>
-              </article>
+                    <body>
+                      <div>
+                        {editSpeechBox != speech.id ? (
+                          <>
+                            <h4>{moment(speech.timeSlot).format('MMM Do')}</h4>
+                            <h4>{moment(speech.timeSlot).format('h:mm')}</h4>
+                          </>
+                        ) : (
+                          <Flatpickr
+                            options={{
+                              disableMobile: true,
+                              enableTime: true,
+                              dateFormat: 'Y-m-d H:i',
+                            }}
+                            value={editSpeech.timeSlot}
+                            onChange={(time) => {
+                              const updatedTime = {
+                                ...editSpeech,
+                                timeSlot: moment(time[0]).format(
+                                  'YYYY-MM-DDTHH:MM:SS'
+                                ),
+                              }
+                              console.log(
+                                moment(time[0]).format('YYYY-MM-DDThh:mm:ss')
+                              )
+                              console.log(new Date())
+                              setEditSpeech(updatedTime)
+                            }}
+                          />
+                        )}
+                      </div>
+                      <div>
+                        <h2>
+                          Title:{'  '}
+                          {editSpeechBox != speech.id ? (
+                            <span>{speech.title}</span>
+                          ) : (
+                            <input
+                              type="text"
+                              name="title"
+                              value={editSpeech.title}
+                              onChange={handleStringFieldChange}
+                            ></input>
+                          )}
+                        </h2>
 
-              {openSpeechBoxOptions === speech.id && (
-                <article className="speechButtons">
-                  {editSpeechBox != speech.id ? (
-                    <>
-                      <button
-                        onClick={function () {
-                          setEditSpeech({
-                            id: speech.id,
-                            title: speech.title,
-                            speechKey: speech.speechKey,
-                            timeSlot: speech.timeSlot,
-                            userId: props.user.id,
-                          })
-                          setEditSpeechBox(speech.id)
-                        }}
+                        <h2>
+                          Speech Key:{'  '}
+                          {editSpeechBox != speech.id ? (
+                            <span>{speech.speechKey}</span>
+                          ) : (
+                            <input
+                              type="text"
+                              name="speechKey"
+                              value={editSpeech.speechKey}
+                              onChange={handleStringFieldChange}
+                            ></input>
+                          )}
+                        </h2>
+                      </div>
+                    </body>
+                    <body>
+                      <svg
+                        className="menuIcon"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 12.96 56.51"
                       >
-                        Edit
-                      </button>
-                      {confirmDelete != speech.id ? (
-                        <button
-                          onClick={() => {
-                            setConfirmDelete(speech.id)
-                          }}
-                        >
-                          Delete
-                        </button>
-                      ) : (
-                        <div>
-                          <h3>Are You Sure?</h3>
-                          <div>
-                            <button onClick={handleSpeechDelete}>Yes</button>
+                        <g id="Layer_2" data-name="Layer 2">
+                          <g id="Layer_1-2" data-name="Layer 1">
+                            <circle cx="6.48" cy="28.25" r="6.48" />
+                            <circle cx="6.48" cy="50.03" r="6.48" />
+                            <circle cx="6.48" cy="6.48" r="6.48" />
+                          </g>
+                        </g>
+                      </svg>
+                    </body>
+                  </article>
+
+                  {openSpeechBoxOptions === speech.id && (
+                    <article className="speechButtons">
+                      {editSpeechBox != speech.id ? (
+                        <>
+                          <button
+                            onClick={function () {
+                              setEditSpeech({
+                                id: speech.id,
+                                title: speech.title,
+                                speechKey: speech.speechKey,
+                                timeSlot: speech.timeSlot,
+                                userId: props.user.id,
+                              })
+                              setEditSpeechBox(speech.id)
+                            }}
+                          >
+                            Edit
+                          </button>
+                          {confirmDelete != speech.id ? (
                             <button
                               onClick={() => {
-                                setConfirmDelete(0)
-                                setOpenSpeechBoxOptions(0)
+                                setConfirmDelete(speech.id)
                               }}
                             >
-                              No
+                              Delete
                             </button>
-                          </div>
-                        </div>
+                          ) : (
+                            <div>
+                              <h3>Are You Sure?</h3>
+                              <div>
+                                <button
+                                  onClick={() => {
+                                    handleSpeechDelete()
+
+                                    setResetStates(resetStates + 1)
+                                  }}
+                                >
+                                  Yes
+                                </button>
+                                <button
+                                  onClick={() => {
+                                    setResetStates(resetStates + 1)
+                                  }}
+                                >
+                                  No
+                                </button>
+                              </div>
+                            </div>
+                          )}
+                        </>
+                      ) : (
+                        <>
+                          <button
+                            onClick={(event) => {
+                              handleSpeechEdit(event, speech.id)
+                              setResetStates(resetStates + 1)
+                            }}
+                          >
+                            Save
+                          </button>
+                          <button
+                            onClick={() => {
+                              setResetStates(resetStates + 1)
+                            }}
+                          >
+                            Cancel
+                          </button>
+                        </>
                       )}
-                    </>
-                  ) : (
-                    <>
-                      <button onClick={handleSpeechEdit}>Save</button>
-                      <button
-                        onClick={function () {
-                          resetEditSpeech()
-                          setEditSpeechBox(0)
-                          setOpenSpeechBoxOptions(0)
-                        }}
-                      >
-                        Cancel
-                      </button>
-                    </>
+                    </article>
                   )}
-                </article>
+                </>
+              ))}
+            <article
+              onClick={() => {
+                setOpenNewSpeechBox(true)
+                setOpenSpeechBoxOptions(0)
+              }}
+            >
+              <h1>New Speech</h1>
+              {errorMessage && <p>{errorMessage}</p>}
+              {openNewSpeechBox && (
+                <>
+                  <form
+                    onSubmit={(event) => {
+                      handleSpeechAdd(event)
+                      setResetStates(resetStates + 1)
+                    }}
+                  >
+                    <p className="form-input">
+                      <label>Title</label>
+                      <input
+                        type="text"
+                        name="title"
+                        value={editSpeech.title}
+                        onChange={handleStringFieldChange}
+                      ></input>
+                    </p>
+                    <p className="form-input">
+                      <label>Speech Key</label>
+                      <input
+                        type="text"
+                        name="speechKey"
+                        value={editSpeech.speechKey}
+                        onChange={handleStringFieldChange}
+                      ></input>
+                    </p>
+                    <p className="form-input">
+                      <label>Schedule</label>
+                      <input
+                        type="datetime-local"
+                        name="timeSlot"
+                        value={editSpeech.timeSlot}
+                        onChange={handleStringFieldChange}
+                      ></input>
+                      <input type="submit" value="Add Speech" />
+                    </p>
+                  </form>
+
+                  <button
+                    onClick={() => {
+                      setResetStates(resetStates + 1)
+                    }}
+                  >
+                    cancel
+                  </button>
+                </>
               )}
-            </>
-          ))}
-          <article
-            onClick={() => {
-              setOpenNewSpeechBox(true)
-            }}
-          >
-            <h1>New Speech</h1>
-            {errorMessage && <p>{errorMessage}</p>}
-            {openNewSpeechBox && (
-              <form onSubmit={handleSpeechAdd}>
-                <p className="form-input">
-                  <label>Title</label>
-                  <input
-                    type="text"
-                    name="title"
-                    value={editSpeech.title}
-                    onChange={handleStringFieldChange}
-                  ></input>
-                </p>
-                <p className="form-input">
-                  <label>Speech Key</label>
-                  <input
-                    type="text"
-                    name="speechKey"
-                    value={editSpeech.speechKey}
-                    onChange={handleStringFieldChange}
-                  ></input>
-                </p>
-                <p className="form-input">
-                  <label>Schedule</label>
-                  <input
-                    type="datetime-local"
-                    name="timeSlot"
-                    value={editSpeech.timeSlot}
-                    onChange={handleStringFieldChange}
-                  ></input>
-                  <input type="submit" value="Add Speech" />
-                </p>
-              </form>
-            )}
-          </article>
-        </div>
+            </article>
+          </div>
+        </section>
       </section>
     </>
   )

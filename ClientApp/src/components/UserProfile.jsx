@@ -6,13 +6,15 @@ export function UserProfile(props) {
   const user = getUser()
   const [upcomingSpeech, setUpcomingSpeech] = useState({})
   const [expandOptions, setExpandOptions] = useState(false)
+  const [totalUnreadNotes, setTotalUnreadNotes] = useState()
 
   useEffect(() => {
-    loadSpeech()
+    loadHeader()
   }, [])
 
-  async function loadSpeech() {
+  async function loadHeader() {
     console.log(authHeader())
+
     const url = '/api/Speeches/upcoming'
     const response = await fetch(url, { headers: { ...authHeader() } })
     const json = await response.json()
@@ -31,7 +33,11 @@ export function UserProfile(props) {
     <>
       <section className="UserProfile">
         <article>
-          <div>
+          <div
+            onClick={() => {
+              window.location.assign('/')
+            }}
+          >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 71.36 68.7">
               <g id="Layer_2" data-name="Layer 2">
                 <g id="Layer_1-2" data-name="Layer 1">
@@ -43,24 +49,27 @@ export function UserProfile(props) {
             </svg>
             <h1>LoveNotes</h1>
           </div>
-          <svg
+          <div
             onClick={() => {
               expandOptions === true
                 ? setExpandOptions(false)
                 : setExpandOptions(true)
             }}
-            className="menuIcon"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 12.96 56.51"
           >
-            <g id="Layer_2" data-name="Layer 2">
-              <g id="Layer_1-2" data-name="Layer 1">
-                <circle cx="6.48" cy="28.25" r="6.48" />
-                <circle cx="6.48" cy="50.03" r="6.48" />
-                <circle cx="6.48" cy="6.48" r="6.48" />
+            <svg
+              className="menuIcon"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 12.96 56.51"
+            >
+              <g id="Layer_2" data-name="Layer 2">
+                <g id="Layer_1-2" data-name="Layer 1">
+                  <circle cx="6.48" cy="28.25" r="6.48" />
+                  <circle cx="6.48" cy="50.03" r="6.48" />
+                  <circle cx="6.48" cy="6.48" r="6.48" />
+                </g>
               </g>
-            </g>
-          </svg>
+            </svg>
+          </div>
         </article>
 
         <article
@@ -84,9 +93,7 @@ export function UserProfile(props) {
         <article>
           <h2>Hi {user.userName}!</h2>
           <h3>{upcomingSpeech.title}</h3>
-          <h3>
-            {moment(`${upcomingSpeech.timeSlot}`).format('MMM Do h:mm')}pm
-          </h3>
+          <h3>{moment(`${upcomingSpeech.timeSlot}`).format('MMM Do h:mm')}</h3>
           <div>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 83.5 69.66">
               <g id="Layer_2" data-name="Layer 2">
@@ -96,7 +103,14 @@ export function UserProfile(props) {
                 </g>
               </g>
             </svg>
-            <h2>{upcomingSpeech.unreadNoteCount} Unread Notes</h2>
+            <h2>
+              {props.speeches
+                .map((speeches) => speeches.unreadNoteCount)
+                .reduce((sum, current) => {
+                  return sum + current
+                }, 0)}{' '}
+              Unread Notes
+            </h2>
           </div>
         </article>
       </section>

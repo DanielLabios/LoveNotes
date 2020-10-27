@@ -31,7 +31,7 @@ export function AudienceGiveNote() {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
 
-      body: JSON.stringify({ ...newNote, speechId: 10 }),
+      body: JSON.stringify({ ...newNote, speechId: pageDetails.speechId }),
     })
   }
 

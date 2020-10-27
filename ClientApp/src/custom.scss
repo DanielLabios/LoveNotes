@@ -99,6 +99,7 @@ body {
       display: inherit;
       svg {
         margin-left: 2rem;
+        margin-right: 2rem;
         fill: $white;
         height: 2.75rem;
       }
@@ -118,6 +119,27 @@ body {
       margin-right: 2rem;
       fill: $white;
       height: 1.75rem;
+    }
+  }
+  .Options {
+    position: absolute;
+    right: 0;
+    button {
+      display: block;
+      width: 17rem;
+      font-size: 1.5rem;
+      background-color: $trueblue;
+      border: solid 3px $darkblue;
+      border-left: solid 8px $darkblue;
+
+      padding-top: 6px;
+      padding-bottom: 8px;
+      color: $white;
+    }
+
+    button:last-child {
+      border-bottom: solid 8px $darkblue;
+      border-radius: 0px 0px 0px 10px;
     }
   }
   article:last-child {
@@ -161,99 +183,116 @@ body {
 }
 
 .speechSchedule {
-  height: 75vh;
-  background-image: url('images/SVG/backgroundshape.svg');
-  background-size: 300vw;
-  background-position-x: center;
-  background-repeat: no-repeat;
-  //display: none;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  h1:not(:last-child) {
-    font-size: 1.25rem;
-    width: 90vw;
-    color: $white;
-  }
   > div {
-    display: flex;
+    background-color: $accentyellow;
+
+    width: 8rem;
+    border-radius: 1.5rem;
+    height: 6rem;
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin-top: 7rem;
+    margin-left: 3rem;
+    text-align: center;
+    line-height: 6rem;
+    box-shadow: 2px 2px 6px 1px #29292975;
+    color: $black;
+    font-weight: 700;
+  }
+  > section {
+    transition: (all 3s ease-out 3.5s);
+    height: 75vh;
+    background-image: url('images/SVG/backgroundshape.svg');
+    background-size: 300vw;
+    background-position-x: center;
+    background-repeat: no-repeat;
+
     flex-direction: column;
     align-items: center;
-  }
-
-  article:not(.speechButtons) {
-    border-radius: 0.25rem;
-    padding-top: 1rem;
-    padding-bottom: 0.5rem;
-    margin-bottom: 1rem;
-
-    background-color: $white;
-    box-shadow: -5px 5px 5px 0px #29292975;
-    width: 90vw;
-    body {
+    h1:not(:last-child) {
+      font-size: 1.25rem;
+      width: 90vw;
+      color: $white;
+    }
+    > div {
       display: flex;
+      flex-direction: column;
+      align-items: center;
     }
-    body > div:last-child {
-      padding-left: 1.25rem;
-      border-left: solid 1px $black;
-    }
-    body > div:last-child h2:first-child {
-      color: $black;
-      font-size: 1.5rem;
-      font-weight: 700;
-      margin: 0rem;
-      margin-bottom: 0.5rem;
-      span {
-        font-family: haboro-extended;
+
+    article:not(.speechButtons) {
+      border-radius: 0.25rem;
+      padding-top: 1rem;
+      padding-bottom: 0.5rem;
+      margin-bottom: 1rem;
+
+      background-color: $white;
+      box-shadow: -5px 5px 5px 0px #29292975;
+      width: 90vw;
+      body {
+        display: flex;
+      }
+      body > div:last-child {
+        padding-left: 1.25rem;
+        border-left: solid 1px $black;
+      }
+      body > div:last-child h2:first-child {
+        color: $black;
         font-size: 1.5rem;
         font-weight: 700;
         margin: 0rem;
+        margin-bottom: 0.5rem;
+        span {
+          font-family: haboro-extended;
+          font-size: 1.5rem;
+          font-weight: 700;
+          margin: 0rem;
+        }
       }
-    }
-    body > div:last-child h2:last-child {
-      padding-top: 0.5rem;
-      width: 18rem;
-      border-top: solid 1px $black;
-      color: #515151;
+      body > div:last-child h2:last-child {
+        padding-top: 0.5rem;
+        width: 18rem;
+        border-top: solid 1px $black;
+        color: #515151;
 
-      font-size: 1.5rem;
-      font-weight: 500;
-      margin: 0rem;
-
-      span {
-        font-family: haboro-extended;
         font-size: 1.5rem;
-        font-weight: 700;
+        font-weight: 500;
         margin: 0rem;
-        line-height: 1.8rem;
-      }
-    }
-    body > div:first-child {
-      padding-right: 1.5rem;
-      margin-left: 1.5rem;
-      width: 5rem;
-      font-weight: 500;
-      margin-top: auto;
-      margin-bottom: auto;
 
-      h4 {
-        margin: 0rem;
-        text-align: center;
+        span {
+          font-family: haboro-extended;
+          font-size: 1.5rem;
+          font-weight: 700;
+          margin: 0rem;
+          line-height: 1.8rem;
+        }
       }
-    }
-    svg {
-      transform: rotate(90deg);
-      margin-top: 0.25rem;
-      margin-right: auto;
-      margin-left: auto;
-      height: 1.75rem;
-      fill: #515151;
+      body > div:first-child {
+        padding-right: 1.5rem;
+        margin-left: 1.5rem;
+        width: 5rem;
+        font-weight: 500;
+        margin-top: auto;
+        margin-bottom: auto;
+
+        h4 {
+          margin: 0rem;
+          text-align: center;
+        }
+      }
+      svg {
+        transform: rotate(90deg);
+        margin-top: 0.25rem;
+        margin-right: auto;
+        margin-left: auto;
+        height: 1.75rem;
+        fill: #515151;
+      }
     }
   }
 
   .speechButtons {
-    transition: (all 1s ease-out 0.5s);
     border: solid 10px red;
     margin-top: -1.5rem;
     padding-bottom: 0rem;
@@ -303,7 +342,28 @@ body {
 }
 
 .NotePile {
-  display: none;
+  margin-top: 2rem;
+  transition: (all 3s ease-out 3.5s);
+  > div {
+    background-color: $accentyellow;
+
+    width: 6rem;
+    border-radius: 25%;
+    height: 6rem;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    margin-bottom: 4rem;
+    margin-right: 3rem;
+    text-align: center;
+    line-height: 6rem;
+    box-shadow: 2px 2px 6px 1px #29292975;
+    color: $black;
+    font-weight: 700;
+
+    //left: 75vw;
+    //bottom: 5vh;
+  }
   main:first-child {
     margin-left: auto;
     margin-right: auto;

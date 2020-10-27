@@ -1,15 +1,27 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { recordAuthentication } from '../auth'
+import { recordAuthentication, isLoggedIn, logout, getUser } from '../auth'
 export function HomePage() {
   const [errorMessage, setErrorMessage] = useState()
   const [speechKeyErrorMessage, setSpeechKeyErrorMessage] = useState()
+  const [loggedIn, setLoggedIn] = useState(false)
 
   const [user, setUser] = useState({
-    userName: 'Username',
-    password: 'Password',
+    userName: '',
+    password: '',
   })
   const [speechKey, setSpeechKey] = useState('')
+  let usersName = ''
+
+  useEffect(() => {
+    const logged = isLoggedIn()
+    setLoggedIn(logged)
+  }, [])
+
+  if (loggedIn === true) {
+    const user = getUser()
+    usersName = user.userName
+  }
 
   function handleStringFieldChange(event) {
     const value = event.target.value
@@ -73,7 +85,7 @@ export function HomePage() {
               <form onSubmit={handleSpeechKeySubmit}>
                 <input
                   onChange={handleSpeechKeyFieldChange}
-                  placeholder="enter Speech Key"
+                  placeholder="Enter Speech Key"
                   type="text"
                   value={speechKey}
                 ></input>
@@ -83,44 +95,77 @@ export function HomePage() {
               {speechKeyErrorMessage && <p>{speechKeyErrorMessage}</p>}
             </div>
           </section>
+          {loggedIn === false ? (
+            <section>
+              <div>
+                <article>
+                  <h2>Giving a Speech?</h2>
+                  <h4>Or just want an account</h4>
+                </article>
+                <article>
+                  <div>
+                    <h1>Sign In Or</h1>
+                    <Link to="/signup">
+                      <h1>Create An Account</h1>
+                    </Link>
+                  </div>
+                  <div>
+                    <form onSubmit={handleFormSubmit}>
+                      {errorMessage && <p>{errorMessage}</p>}
+                      <input
+                        onChange={handleStringFieldChange}
+                        placeholder="Username"
+                        name="userName"
+                        type="text"
+                        value={user.userName}
+                      ></input>
+                      <input
+                        onChange={handleStringFieldChange}
+                        placeholder="Password"
+                        name="password"
+                        type="text"
+                        value={user.password}
+                      ></input>
 
-          <section>
-            <div>
-              <article>
-                <h2>Giving a Speech?</h2>
-                <h4>Or just want an account</h4>
-              </article>
-              <article>
-                <div>
-                  <h1>Sign In Or</h1>
-                  <Link to="/signup">
-                    <h1>Create An Account</h1>
-                  </Link>
-                </div>
-                <div>
-                  <form onSubmit={handleFormSubmit}>
-                    {errorMessage && <p>{errorMessage}</p>}
-                    <input
-                      onChange={handleStringFieldChange}
-                      name="userName"
-                      type="text"
-                      value={user.userName}
-                    ></input>
-                    <input
-                      onChange={handleStringFieldChange}
-                      name="password"
-                      type="text"
-                      value={user.password}
-                    ></input>
+                      <input type="submit" value="Log In"></input>
+                    </form>
+                  </div>
 
-                    <input type="submit" value="Log In"></input>
-                  </form>
-                </div>
-
-                <h4>I forgot my login</h4>
-              </article>
-            </div>
-          </section>
+                  {/* <h4>I forgot my login</h4> */}
+                </article>
+              </div>
+            </section>
+          ) : (
+            <section>
+              <div>
+                <article>
+                  <h2>Already logged in as, </h2>
+                  <h2>{usersName}</h2>
+                </article>
+                <article>
+                  <div>
+                    <h1>Different User?</h1>
+                    <button
+                      onClick={() => {
+                        logout()
+                        window.location.assign('/')
+                      }}
+                    >
+                      Logout
+                    </button>
+                    <h1>Access Notes and Speeches</h1>
+                    <button
+                      onClick={() => {
+                        window.location.assign('/user/id')
+                      }}
+                    >
+                      Go!
+                    </button>
+                  </div>
+                </article>
+              </div>
+            </section>
+          )}
         </body>
       </main>
     </>
