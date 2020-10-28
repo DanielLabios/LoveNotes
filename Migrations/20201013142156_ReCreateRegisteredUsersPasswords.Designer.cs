@@ -3,15 +3,17 @@ using System;
 using LoveNotes.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace LoveNotes.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20201013142156_ReCreateRegisteredUsersPasswords")]
+    partial class ReCreateRegisteredUsersPasswords
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,10 +38,10 @@ namespace LoveNotes.Migrations
                     b.Property<bool>("Opened")
                         .HasColumnType("boolean");
 
-                    b.Property<int>("SpeechId")
+                    b.Property<int>("Speech")
                         .HasColumnType("integer");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("SpeechId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -49,34 +51,7 @@ namespace LoveNotes.Migrations
                     b.ToTable("Notes");
                 });
 
-            modelBuilder.Entity("LoveNotes.Models.Speech", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("SpeechKey")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("TimeSlot")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Speeches");
-                });
-
-            modelBuilder.Entity("LoveNotes.Models.User", b =>
+            modelBuilder.Entity("LoveNotes.Models.RegisteredUser", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -91,36 +66,60 @@ namespace LoveNotes.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.Property<string>("UserName")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EmailAddress")
-                        .IsUnique();
+                    b.ToTable("RegisteredUsers");
+                });
 
-                    b.ToTable("Users");
+            modelBuilder.Entity("LoveNotes.Models.Speech", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<TimeSpan>("OpenFeedbackPeriod")
+                        .HasColumnType("interval");
+
+                    b.Property<int>("RegisteredSpeaker")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("RegisteredUserId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("SpeechKey")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("TimeSlot")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RegisteredUserId");
+
+                    b.ToTable("Speeches");
                 });
 
             modelBuilder.Entity("LoveNotes.Models.Note", b =>
                 {
                     b.HasOne("LoveNotes.Models.Speech", null)
                         .WithMany("Notes")
-                        .HasForeignKey("SpeechId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SpeechId");
                 });
 
             modelBuilder.Entity("LoveNotes.Models.Speech", b =>
                 {
-                    b.HasOne("LoveNotes.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("LoveNotes.Models.RegisteredUser", null)
+                        .WithMany("Speeches")
+                        .HasForeignKey("RegisteredUserId");
                 });
 #pragma warning restore 612, 618
         }

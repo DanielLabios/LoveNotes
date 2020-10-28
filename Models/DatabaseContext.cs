@@ -16,6 +16,7 @@ namespace LoveNotes.Models
         // Add database tables here
         public DbSet<Note> Notes { get; set; }
         public DbSet<Speech> Speeches { get; set; }
+        public DbSet<User> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -34,6 +35,11 @@ namespace LoveNotes.Models
 
                 optionsBuilder.UseNpgsql(conn);
             }
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>().HasIndex(user => user.EmailAddress).IsUnique();
         }
 
         private string ConvertPostConnectionToConnectionString(string connection)

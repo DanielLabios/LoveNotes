@@ -3,15 +3,17 @@ using System;
 using LoveNotes.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace LoveNotes.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20201018181937_Passwords")]
+    partial class Passwords
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,10 +38,7 @@ namespace LoveNotes.Migrations
                     b.Property<bool>("Opened")
                         .HasColumnType("boolean");
 
-                    b.Property<int>("SpeechId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("UserId")
+                    b.Property<int?>("SpeechId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -66,7 +65,7 @@ namespace LoveNotes.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -99,9 +98,6 @@ namespace LoveNotes.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EmailAddress")
-                        .IsUnique();
-
                     b.ToTable("Users");
                 });
 
@@ -109,18 +105,14 @@ namespace LoveNotes.Migrations
                 {
                     b.HasOne("LoveNotes.Models.Speech", null)
                         .WithMany("Notes")
-                        .HasForeignKey("SpeechId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SpeechId");
                 });
 
             modelBuilder.Entity("LoveNotes.Models.Speech", b =>
                 {
-                    b.HasOne("LoveNotes.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("LoveNotes.Models.User", null)
+                        .WithMany("Speeches")
+                        .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
         }

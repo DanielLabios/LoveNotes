@@ -6,11 +6,13 @@ namespace LoveNotes.Models
     {
         public int Id { get; set; }
 
-        public int Speech { get; set; }
+
 
         public string Author { get; set; }
         [Required]
         public string Body { get; set; }
         public bool Opened { get; set; }
+        //public int UserId { get; set; }
+        public int SpeechId { get; set; }
     }
 }
