@@ -4,15 +4,22 @@ import React, { useState, useEffect, useLayoutEffect } from 'react'
 import { logout, isLoggedIn, getUser } from '../auth'
 import { NotePile } from '../components/NotePile.jsx'
 import { UserProfile } from '../components/UserProfile.jsx'
-import { SpeechSchedule } from '../components/SpeechSchedule'
+import { SpeechSchedule } from '../components/SpeechSchedule.jsx'
+import { Header } from '../components/Header.jsx'
+import { useHistory } from 'react-router-dom'
 
 export function LoggedInUser() {
   const user = getUser()
+  const history = useHistory()
   const [speeches, setSpeeches] = useState([])
   const [switchComponent, setSwitchComponent] = useState(0)
 
   useEffect(() => {
-    loadSpeeches()
+    if (isLoggedIn() === false) {
+      history.push('/')
+    } else {
+      loadSpeeches()
+    }
   }, [])
 
   async function loadSpeeches() {
@@ -20,35 +27,32 @@ export function LoggedInUser() {
     const response = await fetch(url)
     const json = await response.json()
     setSpeeches(json)
-    console.log(json)
   }
-
-  // const upcomingSpeech = speeches.reduce((previousspeech, currentspeech) =>
-  //   new Date(currentspeech.timeSlot) > new Date() &&
-  //   new Date(currentspeech.timeSlot) < new Date(previousspeech.timeSlot)
-  //     ? currentspeech
-  //     : previousspeech
-  // )
 
   return (
     <>
       <main className="loggedInUser">
         <body>
-          <UserProfile speeches={speeches} />
-          <SpeechSchedule
-            componentToggleState={switchComponent}
-            componentToggle={setSwitchComponent}
-            speeches={speeches}
-            user={user}
-            loadSpeeches={loadSpeeches}
-          />
-          <NotePile
-            componentToggleState={switchComponent}
-            componentToggle={setSwitchComponent}
-            speeches={speeches}
-            user={user}
-            loadSpeeches={loadSpeeches}
-          />
+          <Header />
+          {isLoggedIn() && (
+            <>
+              <UserProfile speeches={speeches} />
+              <SpeechSchedule
+                componentToggleState={switchComponent}
+                componentToggle={setSwitchComponent}
+                speeches={speeches}
+                user={user}
+                loadSpeeches={loadSpeeches}
+              />
+              <NotePile
+                componentToggleState={switchComponent}
+                componentToggle={setSwitchComponent}
+                speeches={speeches}
+                user={user}
+                loadSpeeches={loadSpeeches}
+              />
+            </>
+          )}
         </body>
       </main>
     </>

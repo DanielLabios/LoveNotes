@@ -137,8 +137,22 @@ export function SpeechSchedule(props) {
                 <>
                   <article
                     onClick={function () {
-                      setOpenSpeechBoxOptions(speech.id)
-                      setOpenNewSpeechBox(false)
+                      if (
+                        openSpeechBoxOptions === speech.id &&
+                        editSpeechBox !== speech.id &&
+                        confirmDelete !== speech.id
+                      ) {
+                        setOpenSpeechBoxOptions(0)
+                      } else if (
+                        editSpeechBox !== 0 ||
+                        confirmDelete !== 0 ||
+                        openNewSpeechBox === true
+                      ) {
+                        return
+                      } else {
+                        setOpenSpeechBoxOptions(speech.id)
+                        setOpenNewSpeechBox(false)
+                      }
                     }}
                   >
                     <body>
@@ -294,8 +308,12 @@ export function SpeechSchedule(props) {
               ))}
             <article
               onClick={() => {
-                setOpenNewSpeechBox(true)
-                setOpenSpeechBoxOptions(0)
+                if (editSpeechBox !== 0 || confirmDelete !== 0) {
+                  return
+                } else {
+                  setOpenNewSpeechBox(true)
+                  setOpenSpeechBoxOptions(0)
+                }
               }}
             >
               <h1>New Speech</h1>

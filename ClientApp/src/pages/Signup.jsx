@@ -4,6 +4,7 @@ export function Signup() {
   const history = useHistory()
   const [errorMessage, setErrorMessage] = useState()
   const [newUser, setNewUser] = useState({
+    name: '',
     userName: '',
     emailAddress: '',
     password: '',
@@ -39,20 +40,11 @@ export function Signup() {
       <form onSubmit={handleFormSubmit}>
         {errorMessage && <p>{errorMessage}</p>}
         <p className="form-input">
-          <label htmlFor="name">Name</label>
+          <label htmlFor="userName">Username</label>
           <input
             type="text"
             name="userName"
             value={newUser.userName}
-            onChange={handleStringFieldChange}
-          />
-        </p>
-        <p className="form-input">
-          <label htmlFor="name">Email</label>
-          <input
-            type="email"
-            name="emailAddress"
-            value={newUser.emailAddress}
             onChange={handleStringFieldChange}
           />
         </p>
@@ -62,6 +54,24 @@ export function Signup() {
             type="password"
             name="password"
             value={newUser.password}
+            onChange={handleStringFieldChange}
+          />
+        </p>
+        <p className="form-input">
+          <label htmlFor="name">Full Name</label>
+          <input
+            type="text"
+            name="name"
+            value={newUser.name}
+            onChange={handleStringFieldChange}
+          />
+        </p>
+        <p className="form-input">
+          <label htmlFor="email">Email</label>
+          <input
+            type="email"
+            name="emailAddress"
+            value={newUser.emailAddress}
             onChange={handleStringFieldChange}
           />
         </p>

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import './custom.scss'
+import './scssFiles/custom.scss'
 import { HomePage } from './pages/HomePage'
 import { LoggedInUser } from './pages/LoggedInUser'
 import { AudienceGiveNote } from './pages/AudienceGiveNote'
@@ -13,7 +13,7 @@ export function App() {
         <Route exact path="/">
           <HomePage />
         </Route>
-        <Route exact path="/user/id">
+        <Route exact path="/user/:id">
           <LoggedInUser />
         </Route>
         <Route exact path="/Notes/:speechKey">
