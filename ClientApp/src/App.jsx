@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import './scssFiles/custom.scss'
 import { HomePage } from './pages/HomePage'
 import { LoggedInUser } from './pages/LoggedInUser'

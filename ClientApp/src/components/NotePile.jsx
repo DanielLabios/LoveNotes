@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useLayoutEffect } from 'react'
-import Axios from 'axios'
+import React, { useState, useEffect } from 'react'
 
 export function NotePile(props) {
   const [expandedNoteId, setExpanededNoteId] = useState(0)
@@ -14,7 +13,8 @@ export function NotePile(props) {
 
   useEffect(() => {
     async function markNoteRead(id) {
-      const response = await fetch(`/api/Notes/${id}/reading`, {
+      // const response =
+      await fetch(`/api/Notes/${id}/reading`, {
         method: 'POST',
       })
 
@@ -25,7 +25,8 @@ export function NotePile(props) {
   }, [expandedNoteId])
 
   async function handleNoteDelete(noteId) {
-    const response = await fetch(`/api/Notes/${noteId}`, {
+    // const response =
+    await fetch(`/api/Notes/${noteId}`, {
       method: 'DELETE',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(noteId),

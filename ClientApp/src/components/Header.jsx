@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useLayoutEffect } from 'react'
-import { logout, authHeader, getUser } from '../auth'
+import React, { useState } from 'react'
+import { logout } from '../auth'
 
 export function Header() {
   const [expandOptions, setExpandOptions] = useState(false)

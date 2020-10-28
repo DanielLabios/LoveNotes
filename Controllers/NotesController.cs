@@ -177,11 +177,11 @@ namespace LoveNotes.Controllers
         [HttpPost]
         public async Task<ActionResult<Note>> GiveNote(ProtoNote protoNote)
         {
-            if (protoNote.Body != null)
+            if (protoNote.Body != "")
             {
                 Note newNote = new Note
                 {
-                    Author = protoNote.Author == null ? "Anonymous" : protoNote.Author,
+                    Author = protoNote.Author == "" ? "Anonymous" : protoNote.Author,
                     Body = protoNote.Body,
                     Opened = false,
                     SpeechId = protoNote.SpeechId,

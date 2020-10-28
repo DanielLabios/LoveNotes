@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useLayoutEffect } from 'react'
-import { logout, authHeader, getUser } from '../auth'
+import React, { useState, useEffect } from 'react'
+import { authHeader, getUser } from '../auth'
 import moment from 'moment'
 
 export function UserProfile(props) {
@@ -17,7 +17,6 @@ export function UserProfile(props) {
     const response = await fetch(url, { headers: { ...authHeader() } })
     const json = await response.json()
     setUpcomingSpeech(json)
-    console.log(json)
   }
 
   return (

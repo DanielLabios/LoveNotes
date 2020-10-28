@@ -89,7 +89,7 @@ export function HomePage() {
           </g>
         </svg>
         <div className="psuedo-element"></div>
-        <body>
+        <div className="body">
           <section>
             <div>
               <h2>Giving Notes?</h2>
@@ -190,7 +190,7 @@ export function HomePage() {
               </div>
             </section>
           )}
-        </body>
+        </div>
       </main>
     </>
   )

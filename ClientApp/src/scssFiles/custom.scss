@@ -11,9 +11,9 @@ html {
   height: 100%;
 }
 
-body {
-  margin: 0;
-}
+// body {
+//   margin: 0;
+// }
 
 .AudienceGiveNote {
   .numbuh1 {
@@ -182,10 +182,10 @@ body {
       background-color: $white;
       box-shadow: -5px 5px 5px 0px #29292975;
       width: 90vw;
-      body {
+      div.body {
         display: flex;
       }
-      body > div:last-child {
+      div.body > div:last-child {
         padding-left: 1.25rem;
         border-left: solid 1px $black;
       }
@@ -202,7 +202,7 @@ body {
           margin: 0rem;
         }
       }
-      body > div:last-child h2:last-child {
+      div.body > div:last-child h2:last-child {
         padding-top: 0.5rem;
         width: 18rem;
         border-top: solid 1px $black;
@@ -220,7 +220,7 @@ body {
           line-height: 1.8rem;
         }
       }
-      body > div:first-child {
+      div.body > div:first-child {
         padding-right: 1.5rem;
         margin-left: 1.5rem;
         width: 5rem;

@@ -75,7 +75,7 @@
     background-color: $white;
   }
 
-  body section:first-child {
+  div.body section:first-child {
     position: absolute;
     top: 25vh;
     left: 0;
@@ -138,7 +138,7 @@
       }
     }
   }
-  body section:last-child > div {
+  div.body section:last-child > div {
     position: absolute;
     bottom: 10vh;
     left: 0;

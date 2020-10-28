@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useLayoutEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { Header } from '../components/Header.jsx'
 //import { GiveNote } from './GiveNote'
@@ -8,7 +8,7 @@ export function AudienceGiveNote() {
   const params = useParams()
   const speechKey = String(params.speechKey)
   const [pageDetails, setPageDetails] = useState({})
-  const [newNote, setNewNote] = useState({ Author: null, Body: null })
+  const [newNote, setNewNote] = useState({ Author: '', Body: '' })
   const [charCount, setCharCount] = useState(150)
   const [errorMessage, setErrorMessage] = useState()
   const [showWrite1More, setShowWrite1More] = useState(false)
@@ -18,7 +18,7 @@ export function AudienceGiveNote() {
   }, [])
 
   useEffect(() => {
-    setNewNote({ ...newNote, Body: null })
+    setNewNote({ ...newNote, Body: '' })
   }, [showWrite1More])
 
   async function loadPageDetails() {
@@ -28,7 +28,6 @@ export function AudienceGiveNote() {
       window.location.assign('/')
     } else {
       setPageDetails(json)
-      console.log(json)
     }
   }
 
@@ -71,7 +70,7 @@ export function AudienceGiveNote() {
     <>
       <Header />
       <main className="AudienceGiveNote">
-        <body>
+        <div>
           <section>
             <h3>Speech Title</h3>
             <h1>{pageDetails.title}</h1>
@@ -139,7 +138,7 @@ export function AudienceGiveNote() {
               </div>
             </div>
           </section>
-        </body>
+        </div>
       </main>
     </>
   )

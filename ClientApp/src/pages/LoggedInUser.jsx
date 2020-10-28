@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useLayoutEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 //import { useParams } from 'react-router-dom'
 //import format from 'date-fns/format' <= bring this in
-import { logout, isLoggedIn, getUser } from '../auth'
+import { isLoggedIn, getUser } from '../auth'
 import { NotePile } from '../components/NotePile.jsx'
 import { UserProfile } from '../components/UserProfile.jsx'
 import { SpeechSchedule } from '../components/SpeechSchedule.jsx'
@@ -32,7 +32,7 @@ export function LoggedInUser() {
   return (
     <>
       <main className="loggedInUser">
-        <body>
+        <div>
           <Header />
           {isLoggedIn() && (
             <>
@@ -53,7 +53,7 @@ export function LoggedInUser() {
               />
             </>
           )}
-        </body>
+        </div>
       </main>
     </>
   )

@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useLayoutEffect } from 'react'
-//import { Link } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+
 import moment from 'moment'
 import Flatpickr from 'react-flatpickr'
 
@@ -19,7 +19,7 @@ export function SpeechSchedule(props) {
   })
   const defaultDate = new Date()
   const speechTimeCutOff = moment(
-    defaultDate.setHours(defaultDate.getHours() + 2)
+    defaultDate.setHours(defaultDate.getHours() - 1)
   ).format('YYYY-MM-DDThh:mm:ss')
 
   useEffect(() => {
@@ -86,7 +86,8 @@ export function SpeechSchedule(props) {
   async function handleSpeechEdit(event, id) {
     event.preventDefault()
 
-    const response = await fetch(`/api/Speeches/${id}`, {
+    // const response =
+    await fetch(`/api/Speeches/${id}`, {
       method: 'PUT',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({ ...editSpeech, notes: [] }),
@@ -100,7 +101,8 @@ export function SpeechSchedule(props) {
   // }, [])
 
   async function handleSpeechDelete() {
-    const response = await fetch(`/api/Speeches/${confirmDelete}`, {
+    // const response =
+    await fetch(`/api/Speeches/${confirmDelete}`, {
       method: 'DELETE',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(confirmDelete),
@@ -155,9 +157,9 @@ export function SpeechSchedule(props) {
                       }
                     }}
                   >
-                    <body>
+                    <div className="body">
                       <div>
-                        {editSpeechBox != speech.id ? (
+                        {editSpeechBox !== speech.id ? (
                           <>
                             <h4>{moment(speech.timeSlot).format('MMM Do')}</h4>
                             <h4>{moment(speech.timeSlot).format('h:mm')}</h4>
@@ -174,13 +176,10 @@ export function SpeechSchedule(props) {
                               const updatedTime = {
                                 ...editSpeech,
                                 timeSlot: moment(time[0]).format(
-                                  'YYYY-MM-DDTHH:MM:SS'
+                                  'YYYY-MM-DDThh:mm:hh'
                                 ),
                               }
-                              console.log(
-                                moment(time[0]).format('YYYY-MM-DDThh:mm:ss')
-                              )
-                              console.log(new Date())
+
                               setEditSpeech(updatedTime)
                             }}
                           />
@@ -189,7 +188,7 @@ export function SpeechSchedule(props) {
                       <div>
                         <h2>
                           Title:{'  '}
-                          {editSpeechBox != speech.id ? (
+                          {editSpeechBox !== speech.id ? (
                             <span>{speech.title}</span>
                           ) : (
                             <input
@@ -203,7 +202,7 @@ export function SpeechSchedule(props) {
 
                         <h2>
                           Speech Key:{'  '}
-                          {editSpeechBox != speech.id ? (
+                          {editSpeechBox !== speech.id ? (
                             <span>{speech.speechKey}</span>
                           ) : (
                             <input
@@ -215,8 +214,8 @@ export function SpeechSchedule(props) {
                           )}
                         </h2>
                       </div>
-                    </body>
-                    <body>
+                    </div>
+                    <div className="body">
                       <svg
                         className="menuIcon"
                         xmlns="http://www.w3.org/2000/svg"
@@ -230,12 +229,12 @@ export function SpeechSchedule(props) {
                           </g>
                         </g>
                       </svg>
-                    </body>
+                    </div>
                   </article>
 
                   {openSpeechBoxOptions === speech.id && (
                     <article className="speechButtons">
-                      {editSpeechBox != speech.id ? (
+                      {editSpeechBox !== speech.id ? (
                         <>
                           <button
                             onClick={function () {
@@ -251,7 +250,7 @@ export function SpeechSchedule(props) {
                           >
                             Edit
                           </button>
-                          {confirmDelete != speech.id ? (
+                          {confirmDelete !== speech.id ? (
                             <button
                               onClick={() => {
                                 setConfirmDelete(speech.id)
@@ -345,13 +344,25 @@ export function SpeechSchedule(props) {
                       ></input>
                     </p>
                     <p className="form-input">
-                      <label>Schedule</label>
-                      <input
-                        type="datetime-local"
-                        name="timeSlot"
+                      <label>TimeSlot</label>
+                      <Flatpickr
+                        options={{
+                          disableMobile: true,
+                          enableTime: true,
+                          dateFormat: 'Y-m-d H:i',
+                        }}
                         value={editSpeech.timeSlot}
-                        onChange={handleStringFieldChange}
-                      ></input>
+                        onChange={(time) => {
+                          const updatedTime = {
+                            ...editSpeech,
+                            timeSlot: moment(time[0]).format(
+                              'YYYY-MM-DDThh:mm:hh'
+                            ),
+                          }
+
+                          setEditSpeech(updatedTime)
+                        }}
+                      />
                       <input type="submit" value="Add Speech" />
                     </p>
                   </form>
