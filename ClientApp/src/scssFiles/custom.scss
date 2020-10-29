@@ -2,7 +2,7 @@
 @import url('https://use.typekit.net/zpj7xqi.css');
 @import url('https://npmcdn.com/flatpickr/dist/themes/material_red.css');
 @import 'pages/homepage';
-
+@import 'pages/audienceGiveNote';
 :root {
   font: 16px / 1 Montserrat;
 }
@@ -11,26 +11,14 @@ html {
   height: 100%;
 }
 
-// body {
-//   margin: 0;
-// }
-
-.AudienceGiveNote {
-  .numbuh1 {
-    opacity: 1;
-    transform: scaleY(100%);
-    transition: (all 0.15s ease-out 0s);
-  }
-  .numbuh2 {
-    opacity: 0;
-    transform: scaleY(20%);
-    transition: (all 0.15s ease-out 0s);
-  }
+body {
+  margin: 0;
+  background-color: $white;
 }
 
 .loggedInUser {
   height: 100vh;
-  //background-image: url('images/loggedinuserbackground2.jpg');
+  background-image: url('../images/loggedinuserbackground2.jpg');
   background-size: cover;
   background-position-x: -30vw;
   background-repeat: no-repeat;
@@ -46,20 +34,27 @@ html {
       padding-top: 1rem;
       padding-bottom: 0.75rem;
       display: inherit;
+
       svg {
         margin-left: 2rem;
         margin-right: 2rem;
         fill: $white;
         height: 2.75rem;
       }
-      h1 {
+
+      h1,
+      h1:after {
+        content: 'LoveNotes';
         font-family: haboro-extended;
         font-size: 2.5rem;
         font-weight: 100;
         font-style: italic;
         color: $white;
         margin: 0rem;
-        margin-left: 2rem;
+        margin-left: 0.5rem;
+        @media all and (max-width: 450px) {
+          content: '~LN~';
+        }
       }
     }
     > svg {
@@ -296,6 +291,7 @@ html {
 .NotePile {
   margin-top: 2rem;
   transition: (all 3s ease-out 3.5s);
+
   > div {
     background-color: $accentyellow;
 
@@ -338,8 +334,11 @@ html {
   }
   main:last-child {
     ul {
+      height: 65vh;
       padding: 0rem;
       margin: 0rem;
+      border: solid red 1px;
+      overflow-y: scroll;
 
       > div {
         display: flex;

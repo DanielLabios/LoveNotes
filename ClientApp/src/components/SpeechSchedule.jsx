@@ -4,6 +4,8 @@ import moment from 'moment'
 import Flatpickr from 'react-flatpickr'
 
 export function SpeechSchedule(props) {
+  const userId = props.user.id
+
   const [errorMessage, setErrorMessage] = useState()
   const [openNewSpeechBox, setOpenNewSpeechBox] = useState(false)
   const [openSpeechBoxOptions, setOpenSpeechBoxOptions] = useState(0)
@@ -15,12 +17,13 @@ export function SpeechSchedule(props) {
     title: '',
     speechKey: '',
     timeSlot: null,
-    userId: props.user.id,
+    userId: userId,
   })
-  const defaultDate = new Date()
-  const speechTimeCutOff = moment(
-    defaultDate.setHours(defaultDate.getHours() - 1)
-  ).format('YYYY-MM-DDThh:mm:ss')
+
+  // Create a date one hour before now
+  const speechTimeCutOff = moment(new Date()).subtract(1, 'hour')
+
+  const loadSpeeches = props.loadSpeeches
 
   useEffect(() => {
     setOpenSpeechBoxOptions(0)
@@ -32,10 +35,10 @@ export function SpeechSchedule(props) {
       title: '',
       speechKey: '',
       timeSlot: null,
-      userId: props.user.id,
+      userId: userId,
     })
-    props.loadSpeeches()
-  }, [resetStates])
+    loadSpeeches()
+  }, [userId, resetStates, loadSpeeches])
 
   function handleStringFieldChange(event) {
     const value = event.target.value
@@ -134,9 +137,11 @@ export function SpeechSchedule(props) {
 
           <div>
             {props.speeches
-              .filter((speech) => speech.timeSlot > speechTimeCutOff)
+              .filter((speech) =>
+                moment(speech.timeSlot).isAfter(speechTimeCutOff)
+              )
               .map((speech) => (
-                <>
+                <React.Fragment key={speech.id}>
                   <article
                     onClick={function () {
                       if (
@@ -169,17 +174,17 @@ export function SpeechSchedule(props) {
                             options={{
                               disableMobile: true,
                               enableTime: true,
-                              dateFormat: 'Y-m-d H:i',
+                              dateFormat: 'Y-m-d H:i K',
+                              //minDate: new Date(),
                             }}
                             value={editSpeech.timeSlot}
                             onChange={(time) => {
                               const updatedTime = {
                                 ...editSpeech,
                                 timeSlot: moment(time[0]).format(
-                                  'YYYY-MM-DDThh:mm:hh'
+                                  'YYYY-MM-DDTHH:mm:ss'
                                 ),
                               }
-
                               setEditSpeech(updatedTime)
                             }}
                           />
@@ -303,7 +308,7 @@ export function SpeechSchedule(props) {
                       )}
                     </article>
                   )}
-                </>
+                </React.Fragment>
               ))}
             <article
               onClick={() => {
@@ -349,17 +354,20 @@ export function SpeechSchedule(props) {
                         options={{
                           disableMobile: true,
                           enableTime: true,
-                          dateFormat: 'Y-m-d H:i',
+                          //dateFormat:"F j, Y h:i K",
+                          dateFormat: 'Y-m-d h:i K',
+                          //time_24hr: true,
+                          //minDate: new Date(),
                         }}
                         value={editSpeech.timeSlot}
                         onChange={(time) => {
+                          console.log(time[0])
                           const updatedTime = {
                             ...editSpeech,
                             timeSlot: moment(time[0]).format(
-                              'YYYY-MM-DDThh:mm:hh'
+                              'YYYY-MM-DDTHH:mm:ss'
                             ),
                           }
-
                           setEditSpeech(updatedTime)
                         }}
                       />

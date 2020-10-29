@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 //import { useParams } from 'react-router-dom'
 //import format from 'date-fns/format' <= bring this in
 import { isLoggedIn, getUser } from '../auth'
@@ -14,20 +14,26 @@ export function LoggedInUser() {
   const [speeches, setSpeeches] = useState([])
   const [switchComponent, setSwitchComponent] = useState(0)
 
+  const userIsLoggedIn = isLoggedIn()
+
+  const loadSpeeches = useCallback(() => {
+    async function loadSpeeches() {
+      const url = `/api/Speeches?userId=${user.id}`
+      const response = await fetch(url)
+      const json = await response.json()
+      setSpeeches(json)
+    }
+
+    loadSpeeches()
+  }, [user.id])
+
   useEffect(() => {
-    if (isLoggedIn() === false) {
+    if (userIsLoggedIn === false) {
       history.push('/')
     } else {
       loadSpeeches()
     }
-  }, [])
-
-  async function loadSpeeches() {
-    const url = `/api/Speeches?userId=${user.id}`
-    const response = await fetch(url)
-    const json = await response.json()
-    setSpeeches(json)
-  }
+  }, [loadSpeeches, history, userIsLoggedIn])
 
   return (
     <>

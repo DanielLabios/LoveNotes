@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
 import { recordAuthentication, isLoggedIn, logout, getUser } from '../auth'
 export function HomePage() {
   const [errorMessage, setErrorMessage] = useState()
@@ -113,22 +112,26 @@ export function HomePage() {
               <div>
                 <div>
                   <article>
-                    <h4>To give speeches and see notes</h4>
+                    <h4>Give speeches and see notes</h4>
                   </article>
                   <div>
                     <article>
                       <div>
                         <h4>Don't have an account?</h4>
-                        <Link to="/signup">
-                          <h1>Create An Account</h1>
-                        </Link>
+
+                        <h1
+                          onClick={() => {
+                            window.location.assign('/signup')
+                          }}
+                        >
+                          Create An Account
+                        </h1>
                       </div>
                       {/* <h4>I forgot my login</h4> */}
                     </article>
                     <div>
                       <h2>Sign In</h2>
                       <form onSubmit={handleFormSubmit}>
-                        {errorMessage && <p>{errorMessage}</p>}
                         <input
                           className="text"
                           onChange={handleStringFieldChange}
@@ -151,6 +154,7 @@ export function HomePage() {
                           type="submit"
                           value="Log In"
                         ></input>
+                        {errorMessage && <p>{errorMessage}</p>}
                       </form>
                     </div>
                   </div>
@@ -158,7 +162,7 @@ export function HomePage() {
               </div>
             </section>
           ) : (
-            <section>
+            <section className="loggedIn">
               <div>
                 <div>
                   <article>

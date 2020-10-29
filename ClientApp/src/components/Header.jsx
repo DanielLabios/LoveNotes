@@ -1,8 +1,14 @@
-import React, { useState } from 'react'
-import { logout } from '../auth'
+import React, { useState, useEffect } from 'react'
+import { logout, isLoggedIn } from '../auth'
 
 export function Header() {
+  const [loggedIn, setLoggedIn] = useState(false)
   const [expandOptions, setExpandOptions] = useState(false)
+
+  useEffect(() => {
+    const logged = isLoggedIn()
+    setLoggedIn(logged)
+  }, [])
 
   return (
     <section className="Header">
@@ -21,36 +27,46 @@ export function Header() {
               </g>
             </g>
           </svg>
-          <h1>LoveNotes</h1>
+          <h1 className="value generated in audienceGiveNote.scss">{''}</h1>
         </div>
-        <div
-          onClick={() => {
-            expandOptions === true
-              ? setExpandOptions(false)
-              : setExpandOptions(true)
-          }}
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 71.08 70.46">
-            <g id="Layer_2" data-name="Layer 2">
-              <g id="Layer_1-2" data-name="Layer 1">
-                <path d="M70.34,33.12,37.24.7a2.43,2.43,0,0,0-3.41,0L.74,33.12a2.44,2.44,0,0,0,1.7,4.18H9.27V68.71A1.75,1.75,0,0,0,11,70.46H28.89a1.75,1.75,0,0,0,1.76-1.75V56.3A2.35,2.35,0,0,1,33,54h4.78a2.35,2.35,0,0,1,2.35,2.35V68.71a1.75,1.75,0,0,0,1.75,1.75H59.69a1.75,1.75,0,0,0,1.75-1.75V38.79a1.49,1.49,0,0,1,1.49-1.49h5.71A2.44,2.44,0,0,0,70.34,33.12Zm-2,2.47H62.79a3,3,0,0,0-3,3V68.46a.37.37,0,0,1-.36.37H42.05a.37.37,0,0,1-.36-.37V56.25a3.88,3.88,0,0,0-3.88-3.88H33a3.89,3.89,0,0,0-3.89,3.88V68.46a.37.37,0,0,1-.36.37H11.33a.37.37,0,0,1-.36-.37V35.59H2.76a.85.85,0,0,1-.59-1.45L34.79,1.91a1.07,1.07,0,0,1,1.5,0L68.91,34.14A.85.85,0,0,1,68.31,35.59Z" />
-              </g>
-            </g>
-          </svg>
-          <svg
-            className="menuIcon"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 12.96 56.51"
+        {loggedIn === true ? (
+          <div
+            onClick={() => {
+              expandOptions === true
+                ? setExpandOptions(false)
+                : setExpandOptions(true)
+            }}
           >
-            <g id="Layer_2" data-name="Layer 2">
-              <g id="Layer_1-2" data-name="Layer 1">
-                <circle cx="6.48" cy="28.25" r="6.48" />
-                <circle cx="6.48" cy="50.03" r="6.48" />
-                <circle cx="6.48" cy="6.48" r="6.48" />
+            <svg
+              className="menuIcon"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 12.96 56.51"
+            >
+              <g id="Layer_2" data-name="Layer 2">
+                <g id="Layer_1-2" data-name="Layer 1">
+                  <circle cx="6.48" cy="28.25" r="6.48" />
+                  <circle cx="6.48" cy="50.03" r="6.48" />
+                  <circle cx="6.48" cy="6.48" r="6.48" />
+                </g>
               </g>
-            </g>
-          </svg>
-        </div>
+            </svg>
+          </div>
+        ) : (
+          <div
+            onClick={() => {
+              window.location.assign('/')
+            }}
+          >
+            {' '}
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 71.08 70.46">
+              <g id="Layer_2" data-name="Layer 2">
+                <g id="Layer_1-2" data-name="Layer 1">
+                  <path d="M70.34,33.12,37.24.7a2.43,2.43,0,0,0-3.41,0L.74,33.12a2.44,2.44,0,0,0,1.7,4.18H9.27V68.71A1.75,1.75,0,0,0,11,70.46H28.89a1.75,1.75,0,0,0,1.76-1.75V56.3A2.35,2.35,0,0,1,33,54h4.78a2.35,2.35,0,0,1,2.35,2.35V68.71a1.75,1.75,0,0,0,1.75,1.75H59.69a1.75,1.75,0,0,0,1.75-1.75V38.79a1.49,1.49,0,0,1,1.49-1.49h5.71A2.44,2.44,0,0,0,70.34,33.12Zm-2,2.47H62.79a3,3,0,0,0-3,3V68.46a.37.37,0,0,1-.36.37H42.05a.37.37,0,0,1-.36-.37V56.25a3.88,3.88,0,0,0-3.88-3.88H33a3.89,3.89,0,0,0-3.89,3.88V68.46a.37.37,0,0,1-.36.37H11.33a.37.37,0,0,1-.36-.37V35.59H2.76a.85.85,0,0,1-.59-1.45L34.79,1.91a1.07,1.07,0,0,1,1.5,0L68.91,34.14A.85.85,0,0,1,68.31,35.59Z" />
+                </g>
+              </g>
+            </svg>
+          </div>
+        )}
       </article>
       <article
         className="Options"

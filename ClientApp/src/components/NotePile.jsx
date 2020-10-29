@@ -11,6 +11,8 @@ export function NotePile(props) {
   //   document.getElementById(whichNote).scrollIntoView()
   // }, [whichNote])
 
+  const loadSpeeches = props.loadSpeeches
+
   useEffect(() => {
     async function markNoteRead(id) {
       // const response =
@@ -18,11 +20,13 @@ export function NotePile(props) {
         method: 'POST',
       })
 
-      props.loadSpeeches()
+      loadSpeeches()
     }
 
-    markNoteRead(expandedNoteId)
-  }, [expandedNoteId])
+    if (expandedNoteId !== 0) {
+      markNoteRead(expandedNoteId)
+    }
+  }, [expandedNoteId, loadSpeeches])
 
   async function handleNoteDelete(noteId) {
     // const response =
@@ -80,16 +84,14 @@ export function NotePile(props) {
           <main>
             {props.speeches
               .filter((speech) =>
-                speechIdFilter === 0
-                  ? speech === speech
-                  : speech.id === speechIdFilter
+                speechIdFilter === 0 ? true : speech.id === speechIdFilter
               )
               .map((speech) => {
                 return (
-                  <ul className="Note">
+                  <ul key={speech.id} className="Note">
                     {speech.notes.map((note) => {
                       return (
-                        <>
+                        <React.Fragment key={note.id}>
                           <div>
                             <div>
                               <li
@@ -150,7 +152,7 @@ export function NotePile(props) {
                               </g>
                             </g>
                           </svg>
-                        </>
+                        </React.Fragment>
                       )
                     })}
                   </ul>

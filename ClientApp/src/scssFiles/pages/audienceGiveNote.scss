@@ -1,0 +1,238 @@
+.AudienceGiveNote {
+  padding-top: 2rem;
+  //overflow-y: hidden;
+  overflow-x: hidden;
+  background-image: url('../../images/GiveNote4.jpg');
+  background-size: auto 108vw;
+  background-position: center top;
+  background-repeat: no-repeat;
+  height: 90vh;
+  @media all and (max-height: 666px) {
+    background-position-y: -5rem;
+  }
+  @media all and (max-width: 666px) {
+    background-position-x: -12rem;
+    background-size: auto 90vh;
+  }
+
+  .psuedo-element {
+    position: relative;
+    bottom: 2rem;
+    background-color: $transparentblue;
+    height: 12rem;
+    width: 150vw;
+    transform: rotate(24deg);
+    margin-top: -5rem;
+    //transform-origin: 50% 50%;
+    //border: red solid 1px;
+  }
+
+  > div.first section {
+    position: relative;
+    bottom: 7rem;
+    text-align: center;
+    //margin-bottom: 10rem;
+
+    // display: flex;
+    // flex-direction: column;
+    // align-content: center;
+    h3 {
+      display: inline;
+      padding-top: 0.15rem;
+      padding-bottom: 0.25rem;
+      border-radius: 0.7rem;
+      padding-left: 0.75rem;
+      padding-right: 0.75rem;
+      background-color: $darkblue;
+      margin: 0rem;
+      font-weight: 500;
+      color: $white;
+      font-size: 0.85rem;
+    }
+    h1 {
+      color: $white;
+      font-size: 1.5rem;
+      margin: 0rem;
+      padding-bottom: 0.5rem;
+      padding-top: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+  }
+  .psuedoContainer {
+    margin-top: -25rem;
+    height: 60vh;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    //border: 1px solid blue;
+    @media all and (max-height: 666px) {
+      display: none;
+    }
+    .psuedo-element2 {
+      // position: relative;
+      // bottom: 0vh;
+
+      background-color: $white;
+      height: 50rem;
+      width: 200vw;
+      margin-top: 10rem;
+      margin-left: -75vw;
+      transform: rotate(24deg);
+    }
+  }
+
+  .giveNote {
+    margin-top: 25vh;
+    position: relative;
+    bottom: 7rem;
+    z-index: 1;
+    // width: 100vw;
+
+    > div {
+      width: 80vw;
+      margin-left: auto;
+      margin-right: auto;
+
+      h1 {
+        margin: 0rem;
+        color: $white;
+        margin-bottom: 1.5rem;
+        line-height: 1.5rem;
+      }
+      form {
+        input:first-child {
+          display: block;
+          padding-left: 4px;
+
+          padding-bottom: 2px;
+          padding-top: 4px;
+          margin-left: auto;
+          margin-right: auto;
+          width: 100%;
+          color: $grey;
+          font-size: 1rem;
+          font-family: haboro-extended;
+          font-weight: 700;
+          box-sizing: border-box;
+          margin-bottom: 1.5rem;
+          border-color: $darkblue;
+          border-style: solid;
+        }
+        textarea {
+          box-sizing: border-box;
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+          width: 100%;
+          height: 8rem;
+          color: $black;
+          font-size: 0.85rem;
+          font-family: montserrat;
+          font-weight: 400;
+          padding: 4px;
+          border-color: $darkblue;
+          border-style: solid;
+          margin: 0rem;
+        }
+        p {
+          margin: 0rem;
+          box-sizing: border-box;
+          color: $white;
+          width: 12rem;
+          background-color: $darkblue;
+          padding-bottom: 2px;
+          padding-top: 4px;
+          padding-right: 1.5em;
+          text-align: right;
+          margin-left: auto;
+          border-radius: 0px 0px 5px 5px;
+        }
+        input.clicker {
+          display: inherit;
+          width: 12rem;
+          padding: 0rem;
+          box-sizing: border-box;
+          padding-bottom: 2px;
+          padding-top: 4px;
+          border: none;
+          background-color: $accentyellow;
+          border-radius: 5px;
+          margin-left: auto;
+          margin-top: 1.5rem;
+        }
+      }
+      > div {
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+        h1 {
+          color: $white;
+          font-family: haboro-extended;
+          font-weight: 700;
+          font-size: 2rem;
+          font-style: italic;
+          margin-bottom: 5rem;
+          margin-top: 5rem;
+          text-decoration: underline;
+          line-height: 2rem;
+        }
+        h3 {
+          margin: 0rem;
+          padding-top: 0.33rem;
+          padding-bottom: 0.33rem;
+          border-radius: 1rem;
+          padding-left: 1.25rem;
+          padding-right: 1.25rem;
+          background-color: $darkblue;
+          margin-bottom: 1rem;
+          font-weight: 500;
+          color: $white;
+          font-size: 1rem;
+          width: 15.5rem;
+          margin-left: auto;
+          margin-right: auto;
+        }
+        > div {
+          //display: flex;
+          //width: 20rem;
+
+          button.clicker {
+            display: inline-block;
+            width: 8rem;
+            padding: 0rem;
+            box-sizing: border-box;
+            padding-bottom: 2px;
+            padding-top: 4px;
+            border: none;
+            background-color: $accentyellow;
+            border-radius: 5px;
+            //margin-left: auto;
+            //margin-right: auto;
+
+            text-align: center;
+
+            margin-bottom: 1.25rem;
+          }
+          button.clicker:first-child {
+            margin-right: 1rem;
+          }
+          button.clicker:last-child {
+            margin-left: 1rem;
+          }
+        }
+      }
+    }
+  }
+
+  .shown {
+    //opacity: 1;
+    display: block;
+    //transform: scaleY(100%);
+    //transition: (all 0.15s ease-out 0s);
+  }
+  .hidden {
+    //opacity: 0;
+    display: none;
+    //transform: scaleY(20%);
+    //transition: (all 0.15s ease-out 0s);
+  }
+}

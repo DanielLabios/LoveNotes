@@ -25,7 +25,11 @@ export function UserProfile(props) {
         <article>
           <h2>Hi {user.name}!</h2>
           <h3>{upcomingSpeech.title}</h3>
-          <h3>{moment(`${upcomingSpeech.timeSlot}`).format('MMM Do h:mm')}</h3>
+          {upcomingSpeech.timeSlot && (
+            <h3>
+              {moment(`${upcomingSpeech.timeSlot}`).format('MMM Do h:mm')}
+            </h3>
+          )}
           <div>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 83.5 69.66">
               <g id="Layer_2" data-name="Layer 2">

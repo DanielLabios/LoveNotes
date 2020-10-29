@@ -9,27 +9,26 @@ export function AudienceGiveNote() {
   const speechKey = String(params.speechKey)
   const [pageDetails, setPageDetails] = useState({})
   const [newNote, setNewNote] = useState({ Author: '', Body: '' })
-  const [charCount, setCharCount] = useState(150)
+  const [charCount, setCharCount] = useState(250)
   const [errorMessage, setErrorMessage] = useState()
   const [showWrite1More, setShowWrite1More] = useState(false)
 
   useEffect(() => {
+    async function loadPageDetails() {
+      const response = await fetch(`/api/Speeches/${speechKey}`)
+      const json = await response.json()
+      if (json.status === 400) {
+        window.location.assign('/')
+      } else {
+        setPageDetails(json)
+      }
+    }
     loadPageDetails()
-  }, [])
+  }, [speechKey])
 
   useEffect(() => {
-    setNewNote({ ...newNote, Body: '' })
+    setNewNote((note) => ({ ...note, Body: '' }))
   }, [showWrite1More])
-
-  async function loadPageDetails() {
-    const response = await fetch(`/api/Speeches/${speechKey}`)
-    const json = await response.json()
-    if (json.status === 400) {
-      window.location.assign('/')
-    } else {
-      setPageDetails(json)
-    }
-  }
 
   async function handleFormSubmit(event) {
     event.preventDefault()
@@ -57,10 +56,9 @@ export function AudienceGiveNote() {
   function handleBodyStringFieldChange(event) {
     const value = event.target.value
 
-    if (value.length !== 151) {
-      const updatedCharCount = 150 - value.length
+    if (value.length !== 251) {
+      const updatedCharCount = 250 - value.length
       setCharCount(updatedCharCount)
-      console.log(updatedCharCount)
       const updatedNote = { ...newNote, Body: value }
 
       setNewNote(updatedNote)
@@ -70,28 +68,21 @@ export function AudienceGiveNote() {
     <>
       <Header />
       <main className="AudienceGiveNote">
-        <div>
+        <div className="psuedo-element"></div>
+        <div className="first">
           <section>
             <h3>Speech Title</h3>
             <h1>{pageDetails.title}</h1>
-            <h3>Speaker Name</h3>
+            <h3>Speaker's Name</h3>
             <h1>{pageDetails.speechPerformerName}</h1>
           </section>
-          <section className="GiveNote">
+        </div>
+        <div>
+          <section className="giveNote">
             <div>
-              <h1
-                onClick={() => {
-                  console.log('speechKey')
-                }}
-              >
-                Give Notes To {pageDetails.speechPerformerName}
-              </h1>
+              <h1>Give Notes To {pageDetails.speechPerformerName}</h1>
               <form
-                className={showWrite1More ? 'numbuh2' : 'numbuh1'}
-                style={{
-                  display: 'block',
-                  //display: showWrite1More === false ? 'block' : 'none',
-                }}
+                className={showWrite1More ? 'hidden' : 'shown'}
                 onSubmit={handleFormSubmit}
               >
                 <input
@@ -108,19 +99,14 @@ export function AudienceGiveNote() {
                   onChange={handleBodyStringFieldChange}
                 ></textarea>
                 <p>{`${charCount} characters left`}</p>
-                <input type="submit" value="Submit"></input>
+                <input className="clicker" type="submit" value="Submit"></input>
               </form>
-              <div
-                className={showWrite1More ? 'numbuh2' : 'numbuh1'}
-                style={{
-                  // display: showWrite1More === false ? 'block' : 'none',
-                  display: 'block',
-                }}
-              >
-                <h1>Note Has Been Sent</h1>
+              <div className={showWrite1More ? 'show' : 'hidden'}>
+                <h1>Note Has Been Sent!</h1>
                 <h3>Do you want to send another?</h3>
                 <div>
                   <button
+                    className="clicker"
                     onClick={() => {
                       setShowWrite1More(false)
                     }}
@@ -128,6 +114,7 @@ export function AudienceGiveNote() {
                     Yes
                   </button>
                   <button
+                    className="clicker"
                     onClick={() => {
                       window.location.assign('/')
                     }}
@@ -138,6 +125,9 @@ export function AudienceGiveNote() {
               </div>
             </div>
           </section>
+        </div>{' '}
+        <div className="psuedoContainer">
+          <div className="psuedo-element2"></div>
         </div>
       </main>
     </>
