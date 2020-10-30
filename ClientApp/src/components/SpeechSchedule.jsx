@@ -118,7 +118,7 @@ export function SpeechSchedule(props) {
   return (
     <>
       <section className="speechSchedule">
-        <div
+        <button
           style={{
             display: props.componentToggleState === 1 ? 'block' : 'none',
           }}
@@ -127,7 +127,7 @@ export function SpeechSchedule(props) {
           }}
         >
           Speeches
-        </div>
+        </button>
         <section
           style={{
             display: props.componentToggleState === 0 ? 'block' : 'none',
@@ -320,11 +320,12 @@ export function SpeechSchedule(props) {
                 }
               }}
             >
-              <h1>New Speech</h1>
+              <h1 className="new">New Speech</h1>
               {errorMessage && <p>{errorMessage}</p>}
               {openNewSpeechBox && (
                 <>
                   <form
+                    className="newSpeech"
                     onSubmit={(event) => {
                       handleSpeechAdd(event)
                       setResetStates(resetStates + 1)
@@ -371,17 +372,21 @@ export function SpeechSchedule(props) {
                           setEditSpeech(updatedTime)
                         }}
                       />
-                      <input type="submit" value="Add Speech" />
+                      <input
+                        className="clicker"
+                        type="submit"
+                        value="Add Speech"
+                      />
                     </p>
+                    <button
+                      className="clicker"
+                      onClick={() => {
+                        setResetStates(resetStates + 1)
+                      }}
+                    >
+                      cancel
+                    </button>
                   </form>
-
-                  <button
-                    onClick={() => {
-                      setResetStates(resetStates + 1)
-                    }}
-                  >
-                    cancel
-                  </button>
                 </>
               )}
             </article>

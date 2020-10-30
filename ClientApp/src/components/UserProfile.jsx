@@ -11,12 +11,16 @@ export function UserProfile(props) {
   }, [])
 
   async function loadHeader() {
-    console.log(authHeader())
+    //console.log(authHeader())
 
     const url = '/api/Speeches/upcoming'
     const response = await fetch(url, { headers: { ...authHeader() } })
     const json = await response.json()
-    setUpcomingSpeech(json)
+    if (json.status === 404) {
+      setUpcomingSpeech({ title: 'No Upcoming Speech', timeSlot: '' })
+    } else {
+      setUpcomingSpeech(json)
+    }
   }
 
   return (

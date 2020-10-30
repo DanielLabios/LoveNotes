@@ -62,7 +62,14 @@ namespace LoveNotes.Controllers
         public async Task<ActionResult<Speech>> GetUpcomingSpeech()
         {
             var speech = await _context.Speeches.OrderBy(speech => speech.TimeSlot).Where(speech => speech.UserId == GetCurrentUserId()).Where(speech => speech.TimeSlot > DateTime.Now).Include(speech => speech.Notes).FirstOrDefaultAsync();
-            return speech;
+            if (speech == null)
+            {
+                // There wasn't a speech with that id so return a `404` not found
+                return NotFound();
+            }
+            else
+                return speech;
+
         }
 
 
