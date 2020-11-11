@@ -19,12 +19,12 @@ namespace LoveNotes.Models
         public DateTime TimeSlot { get; set; }
         public DateTime OpenFeedbackPeriodUTC()
         {
-            var openTime = TimeSlot.ToUniversalTime().AddHours(-1);
+            var openTime = TimeSlot.AddHours(-1).ToUniversalTime();
             return openTime;
         }
         public DateTime ClosedFeedbackPeriodUTC()
         {
-            var closeTime = TimeSlot.ToUniversalTime().AddHours(2);
+            var closeTime = TimeSlot.AddHours(2).ToUniversalTime();
             return closeTime;
         }
         public int UserId { get; set; }

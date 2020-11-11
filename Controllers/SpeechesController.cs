@@ -132,7 +132,7 @@ namespace LoveNotes.Controllers
                 {
                     status = 400,
 
-                    errors = new List<string>() { "The Event has not started, try again later" }
+                    errors = new List<string>() { "The Event has not started, try again later " + foundSpeech.OpenFeedbackPeriodUTC() + " " + currentTime }
                 };
 
                 return BadRequest(response);
