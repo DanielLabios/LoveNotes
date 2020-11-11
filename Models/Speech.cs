@@ -17,14 +17,14 @@ namespace LoveNotes.Models
         public string SpeechKey { get; set; }
         [Required]
         public DateTime TimeSlot { get; set; }
-        public DateTime OpenFeedbackPeriod()
+        public DateTime OpenFeedbackPeriodUTC()
         {
-            var openTime = TimeSlot.AddHours(-1);
+            var openTime = TimeSlot.ToUniversalTime().AddHours(-1);
             return openTime;
         }
-        public DateTime ClosedFeedbackPeriod()
+        public DateTime ClosedFeedbackPeriodUTC()
         {
-            var closeTime = TimeSlot.AddHours(2);
+            var closeTime = TimeSlot.ToUniversalTime().AddHours(2);
             return closeTime;
         }
         public int UserId { get; set; }

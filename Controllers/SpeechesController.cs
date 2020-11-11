@@ -85,9 +85,9 @@ namespace LoveNotes.Controllers
             var foundSpeech = await _context.Speeches
                 .Where(Speech => Speech.SpeechKey == speechKey)
                     .Include(speech => speech.User).FirstOrDefaultAsync();
-            DateTime currentTime = DateTime.Now;
-            int startFeedbackPeriod = DateTime.Compare(currentTime, foundSpeech.OpenFeedbackPeriod());
-            int endFeedbackPeriod = DateTime.Compare(currentTime, foundSpeech.ClosedFeedbackPeriod());
+            DateTime currentTime = DateTime.UtcNow;
+            int startFeedbackPeriod = DateTime.Compare(currentTime, foundSpeech.OpenFeedbackPeriodUTC());
+            int endFeedbackPeriod = DateTime.Compare(currentTime, foundSpeech.ClosedFeedbackPeriodUTC());
             if (startFeedbackPeriod < 0 || endFeedbackPeriod >= 0)
             {
                 var response = new
@@ -126,7 +126,7 @@ namespace LoveNotes.Controllers
                 return BadRequest(response);
             }
 
-            if (currentTime < foundSpeech.OpenFeedbackPeriod())
+            if (currentTime < foundSpeech.OpenFeedbackPeriodUTC())
             {
                 var response = new
                 {
@@ -137,7 +137,7 @@ namespace LoveNotes.Controllers
 
                 return BadRequest(response);
             }
-            if (currentTime >= foundSpeech.ClosedFeedbackPeriod())
+            if (currentTime >= foundSpeech.ClosedFeedbackPeriodUTC())
             {
                 var response = new
                 {
