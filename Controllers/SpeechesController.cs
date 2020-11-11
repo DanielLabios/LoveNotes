@@ -142,7 +142,7 @@ namespace LoveNotes.Controllers
                 var response = new
                 {
                     status = 400,
-                    errors = new List<string>() { "The Event is over. Feedback Period for speech is closed" }
+                    errors = new List<string>() { "The Event is over. Feedback Period for speech is closed" + foundSpeech.ClosedFeedbackPeriodUTC() + " " + currentTime }
                 }; return BadRequest(response);
             }
             else
