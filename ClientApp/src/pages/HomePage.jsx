@@ -40,7 +40,7 @@ export function HomePage() {
   async function handleSpeechKeySubmit(event) {
     event.preventDefault()
 
-    const response = await fetch(`api/Speeches/TimeValid${speechKey}`, {
+    const response = await fetch(`api/Speeches/TimeValid/${speechKey}`, {
       method: 'Get',
       headers: { 'content-type': 'application/json' },
     })

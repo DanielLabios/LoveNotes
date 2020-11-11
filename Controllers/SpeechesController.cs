@@ -61,7 +61,7 @@ namespace LoveNotes.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<Speech>> GetUpcomingSpeech()
         {
-            var speech = await _context.Speeches.OrderBy(speech => speech.TimeSlot).Where(speech => speech.UserId == GetCurrentUserId()).Where(speech => speech.TimeSlot > DateTime.Now).Include(speech => speech.Notes).FirstOrDefaultAsync();
+            var speech = await _context.Speeches.OrderBy(speech => speech.TimeSlot).Where(speech => speech.UserId == GetCurrentUserId()).Where(speech => speech.TimeSlot.ToUniversalTime() > DateTime.UtcNow).Include(speech => speech.Notes).FirstOrDefaultAsync();
             if (speech == null)
             {
                 // There wasn't a speech with that id so return a `404` not found
@@ -108,12 +108,12 @@ namespace LoveNotes.Controllers
             }
         }
 
-        [HttpGet("TimeValid{speechKey}")]
+        [HttpGet("TimeValid/{speechKey}")]
         public async Task<ActionResult> GetUserAndSpeech(string speechKey)
         {
             Speech foundSpeech = await _context.Speeches.FirstOrDefaultAsync(Speech => Speech.SpeechKey == speechKey);
 
-            DateTime currentTime = DateTime.Now;
+            DateTime currentTime = DateTime.UtcNow;
             // int startFeedbackPeriod = DateTime.Compare(currentTime, foundSpeech.OpenFeedbackPeriod());
             // int endFeedbackPeriod = DateTime.Compare(currentTime, foundSpeech.ClosedFeedbackPeriod());
             if (foundSpeech == null)
